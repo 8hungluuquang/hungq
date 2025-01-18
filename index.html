@@ -99,6 +99,52 @@
             background: linear-gradient(to right, #d32f2f, #e74c3c);
             transform: scale(1.1);
         }
+
+        /* Phong cách cho đánh giá sao và phản hồi */
+        .rating-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .rating-container span {
+            font-size: 20px;
+            cursor: pointer;
+            margin: 0 5px;
+            color: #ccc;
+            transition: color 0.3s ease;
+        }
+        .rating-container span:hover,
+        .rating-container span.selected {
+            color: #f39c12;
+        }
+        .feedback-container {
+            margin-top: 20px;
+            display: none;
+            text-align: center;
+        }
+        .feedback-container textarea {
+            width: 100%;
+            max-width: 600px;
+            height: 100px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        .feedback-container button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+        .feedback-container button:hover {
+            background: #2980b9;
+            transform: scale(1.1);
+        }
     </style>
 </head>
 <body>
@@ -125,6 +171,18 @@
     <div class="output">
         <h3>Gợi ý:</h3>
         <p id="suggestion">Chọn đủ tiêu chí để nhận gợi ý...</p>
+    </div>
+    <div class="rating-container">
+        <p>Đánh giá gợi ý:</p>
+        <span onclick="rate(1)">&#9733;</span>
+        <span onclick="rate(2)">&#9733;</span>
+        <span onclick="rate(3)">&#9733;</span>
+        <span onclick="rate(4)">&#9733;</span>
+        <span onclick="rate(5)">&#9733;</span>
+    </div>
+    <div class="feedback-container">
+        <textarea id="feedback" placeholder="Phản hồi của bạn..."></textarea>
+        <button onclick="submitFeedback()">Gửi phản hồi</button>
     </div>
     <button class="reset-btn" onclick="resetAll()">Làm mới lựa chọn</button>
 
@@ -196,6 +254,30 @@
             Object.keys(criteria).forEach(key => criteria[key] = null);
             document.querySelectorAll('.menu button').forEach(btn => btn.classList.remove('selected'));
             document.getElementById('suggestion').textContent = "Chọn đủ tiêu chí để nhận gợi ý...";
+        }
+
+        function rate(stars) {
+            const ratingStars = document.querySelectorAll('.rating-container span');
+            ratingStars.forEach((star, index) => {
+                if (index < stars) star.classList.add('selected');
+                else star.classList.remove('selected');
+            });
+            if (stars === 5) {
+                alert("Cảm ơn vì đánh giá cao của bạn :D");
+            } else {
+                document.querySelector('.feedback-container').style.display = 'block';
+            }
+        }
+
+        function submitFeedback() {
+            const feedback = document.getElementById('feedback').value;
+            if (feedback.trim() === '') {
+                alert('Vui lòng điền phản hồi!');
+                return;
+            }
+            alert('Cảm ơn phản hồi của bạn!');
+            document.getElementById('feedback').value = '';
+            document.querySelector('.feedback-container').style.display = 'none';
         }
     </script>
 </body>
