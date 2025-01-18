@@ -12,36 +12,81 @@
             background: linear-gradient(to bottom, #eceff1, #ffffff); /* Tạo nền gradient */
             margin: 0;
             padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
         }
 
-        /* Tiêu đề chính của trang */
         h1 {
             text-align: center;
-            color: #2c3e50; /* Màu chữ đậm */
+            color: #2c3e50;
             font-weight: 700;
-            font-size: 2.5rem; /* Kích thước chữ lớn */
+            font-size: 3rem;
             margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
         }
 
-        /* Phần giới thiệu */
         .intro {
             text-align: center;
             background: #ffffff;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-            margin-bottom: 30px;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            max-width: 600px;
+            margin-bottom: 40px;
         }
 
         .intro p {
-            font-size: 18px;
+            font-size: 20px;
             color: #34495e;
-            line-height: 1.6;
+            line-height: 1.8;
+            margin-bottom: 20px;
         }
 
         .intro button {
-            margin-top: 20px;
-            padding: 10px 20px;
+            padding: 15px 25px;
+            font-size: 18px;
+            font-weight: 600;
+            background: linear-gradient(to right, #4caf50, #81c784);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .intro button:hover {
+            background: linear-gradient(to right, #388e3c, #66bb6a);
+            transform: scale(1.1);
+        }
+
+        .menu-container {
+            display: none;
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .menu {
+            margin: 20px 0;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .menu h3 {
+            color: #34495e;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .menu button {
+            margin: 10px 15px;
+            padding: 15px 25px;
             font-size: 16px;
             font-weight: 500;
             background: linear-gradient(to right, #3498db, #5dade2);
@@ -49,90 +94,45 @@
             border: none;
             border-radius: 8px;
             cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: background 0.3s ease, transform 0.2s ease;
         }
 
-        .intro button:hover {
-            background: linear-gradient(to right, #2980b9, #3498db);
-            transform: scale(1.05);
-        }
-
-        /* Ẩn menu khi chưa bấm bắt đầu */
-        .menu-container {
-            display: none;
-        }
-
-        /* Giao diện của từng khối chọn tiêu chí */
-        .menu {
-            margin: 20px 0;
-            padding: 20px;
-            background: #ffffff; /* Màu nền trắng */
-            border-radius: 15px; /* Bo tròn góc */
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng */
-            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Hiệu ứng khi hover */
-        }
-
-        /* Hiệu ứng khi di chuột vào menu */
-        .menu:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Tiêu đề trong mỗi khối menu */
-        .menu h3 {
-            color: #34495e; /* Màu chữ */
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-            font-weight: 500;
-        }
-
-        /* Các nút trong menu */
-        .menu button {
-            margin: 10px 15px;
-            padding: 15px 25px;
-            font-size: 16px;
-            font-weight: 500;
-            background: linear-gradient(to right, #3498db, #5dade2); /* Nền gradient */
-            color: white; /* Màu chữ trắng */
-            border: none;
-            border-radius: 8px; /* Bo tròn nút */
-            cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng */
-            transition: background 0.3s ease, transform 0.2s ease;
-        }
-
-        /* Hiệu ứng khi di chuột vào nút */
         .menu button:hover {
             background: linear-gradient(to right, #2980b9, #3498db);
-            transform: scale(1.08); /* Phóng to nhẹ khi hover */
+            transform: scale(1.08);
         }
 
-        /* Nút được chọn */
         .menu button.selected {
             background: linear-gradient(to right, #27ae60, #2ecc71);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            transform: scale(1.1); /* Tăng kích thước nhẹ */
+            transform: scale(1.1);
         }
 
-        /* Phần hiển thị gợi ý */
         .output {
             margin-top: 30px;
-            padding: 30px;
-            background: linear-gradient(to bottom, #ffffff, #ecf0f1);
+            padding: 20px;
+            background: linear-gradient(to bottom, #ffffff, #f8f9fa);
             border-radius: 15px;
-            text-align: center;
-            font-size: 18px;
-            font-weight: 500;
-            color: #34495e;
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
         }
 
-        /* Tiêu đề trong phần gợi ý */
-        .output h3 {
-            margin-bottom: 10px;
-            color: #3498db;
-            font-weight: 600;
-            font-size: 1.5rem;
+        .reset-btn {
+            margin: 20px auto;
+            padding: 15px 35px;
+            font-size: 18px;
+            font-weight: bold;
+            background: linear-gradient(to right, #f44336, #ef5350);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .reset-btn:hover {
+            background: linear-gradient(to right, #c62828, #e53935);
+            transform: scale(1.1);
         }
     </style>
 </head>
@@ -183,39 +183,12 @@
             { rule: "cheap AND veryHealthy AND refresh", output: "Nước ngọt không có ga: Nước ép cam, Nước ép dứa, Trà xanh." },
             { rule: "cheap AND veryHealthy AND nutrition", output: "Nước ép trái cây giá rẻ: Nước ép táo, Nước ép lựu." },
             { rule: "cheap AND veryHealthy AND both", output: "Trà thảo mộc: Trà gừng, Trà hoa cúc." },
-            { rule: "cheap AND notTooHarmful AND refresh", output: "Nước ngọt có ga: Coca-Cola, Pepsi, Sprite." },
-            { rule: "cheap AND notTooHarmful AND nutrition", output: "Loại nước chưa tồn tại!" },
-            { rule: "cheap AND notTooHarmful AND both", output: "Loại nước chưa tồn tại!" },
-            { rule: "cheap AND healthy AND refresh", output: "Nước lọc giá rẻ: Nước tinh khiết, Nước khoáng đóng chai." },
-            { rule: "cheap AND healthy AND nutrition", output: "Loại nước chưa tồn tại!" },
-            { rule: "cheap AND healthy AND both", output: "Loại nước chưa tồn tại!" },
-            { rule: "cheap AND unhealthy AND refresh", output: "Nước ngọt giá rẻ: Soda vị đặc biệt, Nước ngọt đóng chai." },
-            { rule: "cheap AND unhealthy AND nutrition", output: "Loại nước chưa tồn tại!" },
-            { rule: "cheap AND unhealthy AND both", output: "Loại nước chưa tồn tại!" },
             { rule: "medium AND veryHealthy AND refresh", output: "Nước dừa tươi, Nước ép cà rốt." },
             { rule: "medium AND veryHealthy AND nutrition", output: "Nước ép rau củ: Nước ép củ cải đỏ, Nước ép dưa leo." },
             { rule: "medium AND veryHealthy AND both", output: "Nước tốt cho sức khỏe: Trà hoa cúc, Kombucha." },
-            { rule: "medium AND notTooHarmful AND refresh", output: "Trà sữa ít đường: Trà sữa matcha, Trà sữa trân châu ít ngọt." },
-            { rule: "medium AND notTooHarmful AND nutrition", output: "Nước tăng lực ít đường: Red Bull không đường, Monster Ultra." },
-            { rule: "medium AND notTooHarmful AND both", output: "Loại nước chưa tồn tại!" },
-            { rule: "medium AND healthy AND refresh", output: "Kombucha: Kombucha gừng, Kombucha dứa." },
-            { rule: "medium AND healthy AND nutrition", output: "Sữa hạt: Sữa óc chó, Sữa hạnh nhân." },
-            { rule: "medium AND healthy AND both", output: "Sữa chua uống: Sữa chua uống vị dâu, Sữa chua uống vị việt quất." },
-            { rule: "medium AND unhealthy AND refresh", output: "Loại nước chưa tồn tại!" },
-            { rule: "medium AND unhealthy AND nutrition", output: "Loại nước chưa tồn tại!" },
-            { rule: "medium AND unhealthy AND both", output: "Loại nước chưa tồn tại!" },
             { rule: "expensive AND veryHealthy AND refresh", output: "Nước khoáng cao cấp: Evian, Perrier." },
             { rule: "expensive AND veryHealthy AND nutrition", output: "Nước ép rau củ cao cấp: Nước ép cần tây, Nước ép cà rốt." },
-            { rule: "expensive AND veryHealthy AND both", output: "Nước detox: Detox chanh, Detox bạc hà." },
-            { rule: "expensive AND notTooHarmful AND refresh", output: "Nước ngọt cao cấp: Soda vị cherry, Soda vanilla." },
-            { rule: "expensive AND notTooHarmful AND nutrition", output: "Loại nước chưa tồn tại!" },
-            { rule: "expensive AND notTooHarmful AND both", output: "Loại nước chưa tồn tại!" },
-            { rule: "expensive AND healthy AND refresh", output: "Nước khoáng nhập khẩu: San Pellegrino, Perrier." },
-            { rule: "expensive AND healthy AND nutrition", output: "Loại nước chưa tồn tại!" },
-            { rule: "expensive AND healthy AND both", output: "Loại nước chưa tồn tại!" },
-            { rule: "expensive AND unhealthy AND refresh", output: "Loại nước chưa tồn tại!" },
-            { rule: "expensive AND unhealthy AND nutrition", output: "Loại nước chưa tồn tại!" },
-            { rule: "expensive AND unhealthy AND both", output: "Rượu vang: Rượu vang đỏ, Rượu vang trắng." },
+            { rule: "expensive AND veryHealthy AND both", output: "Nước detox: Detox chanh, Detox bạc hà." }
         ];
 
         const criteria = { price: null, health: null, purpose: null };
