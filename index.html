@@ -8,15 +8,20 @@
     <style>
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: #f4f7fc;
+            background: linear-gradient(to bottom, #f4f7fc, #ffffff); /* Nền đẹp hơn */
             margin: 0;
             padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         h1 {
             text-align: center;
             color: #2c3e50;
             font-weight: 700;
             margin-bottom: 30px;
+            font-size: 3rem;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng chữ */
         }
         .menu {
             margin: 20px 0;
@@ -25,65 +30,74 @@
             border: 1px solid #ddd;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px; /* Giới hạn độ rộng */
         }
         .menu h3 {
             color: #34495e;
             margin-bottom: 15px;
             font-weight: 500;
+            text-align: center;
         }
         .menu button {
             margin: 5px 10px;
             padding: 12px 20px;
             font-size: 14px;
-            background: #3498db;
+            background: linear-gradient(to right, #3498db, #5dade2); /* Gradient nút */
             color: white;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         .menu button:hover {
-            background: #2980b9;
-            transform: scale(1.05);
+            background: linear-gradient(to right, #2980b9, #3498db);
+            transform: scale(1.1);
         }
         .menu button.selected {
-            background: #2ecc71;
-            transform: scale(1.05);
+            background: linear-gradient(to right, #2ecc71, #27ae60);
+            transform: scale(1.1);
         }
         .output {
             margin-top: 30px;
             padding: 20px;
-            background-color: #ecf0f1;
+            background: linear-gradient(to bottom, #ffffff, #ecf0f1);
             border-radius: 10px;
             text-align: center;
             font-size: 16px;
             color: #34495e;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
         }
         .output h3 {
             margin: 0 0 10px;
             color: #3498db;
-            font-weight: 500;
+            font-weight: 600;
         }
         .output p {
             font-size: 18px;
             font-weight: 500;
+            color: #2c3e50;
         }
         .reset-btn {
             display: block;
             margin: 30px auto;
-            padding: 12px 30px;
+            padding: 15px 30px;
             font-size: 16px;
-            background-color: #e74c3c;
+            font-weight: bold;
+            background: linear-gradient(to right, #e74c3c, #f57373); /* Nút gradient */
             color: white;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
         .reset-btn:hover {
-            background-color: #c0392b;
-            transform: scale(1.05);
+            background: linear-gradient(to right, #d32f2f, #e74c3c);
+            transform: scale(1.1);
         }
     </style>
 </head>
@@ -115,11 +129,7 @@
     <button class="reset-btn" onclick="resetAll()">Làm mới lựa chọn</button>
 
     <script>
-        const criteria = {
-            price: null,
-            health: null,
-            purpose: null,
-        };
+        const criteria = { price: null, health: null, purpose: null };
 
         function resetSelection(button) {
             const buttons = button.parentElement.querySelectorAll('button');
@@ -136,14 +146,11 @@
         function updateSuggestion() {
             const { price, health, purpose } = criteria;
             const suggestion = document.getElementById('suggestion');
-
             if (!price || !health || !purpose) {
                 suggestion.textContent = "Hãy chọn đủ các tiêu chí để nhận gợi ý!";
                 return;
             }
-
-            // Xây dựng 36 luật
-            const rules = [
+             const rules = [
     { rule: "cheap AND veryHealthy AND refresh", output: "Nước ngọt không có ga: Nước ép cam, Nước ép dứa, Trà xanh." },
     { rule: "cheap AND veryHealthy AND nutrition", output: "Nước ép trái cây giá rẻ: Nước ép táo, Nước ép lựu." },
     { rule: "cheap AND veryHealthy AND both", output: "Trà thảo mộc: Trà gừng, Trà hoa cúc." },
@@ -181,26 +188,14 @@
     { rule: "expensive AND unhealthy AND nutrition", output: "Loại nước chưa tồn tại!" },
     { rule: "expensive AND unhealthy AND both", output: "Rượu vang: Rượu vang đỏ, Rượu vang trắng." },
 ];
-
-
-            const matched = rules.find(r => {
-                const [priceMatch, healthMatch, purposeMatch] = r.rule.split(" AND ");
-                return (
-                    priceMatch.includes(price) &&
-                    healthMatch.includes(health) &&
-                    purposeMatch.includes(purpose)
-                );
-            });
-
-            suggestion.innerHTML = matched ? matched.output : "Loại nước chưa tồn tại!";
+            const matched = rules.find(rule => rule.rule === `${price} AND ${health} AND ${purpose}`);
+            suggestion.textContent = matched ? matched.output : "Không tìm thấy gợi ý phù hợp!";
         }
 
         function resetAll() {
             Object.keys(criteria).forEach(key => criteria[key] = null);
-            const buttons = document.querySelectorAll('.menu button');
-            buttons.forEach(btn => btn.classList.remove('selected'));
-            const suggestion = document.getElementById('suggestion');
-            suggestion.textContent = "Chọn đủ tiêu chí để nhận gợi ý...";
+            document.querySelectorAll('.menu button').forEach(btn => btn.classList.remove('selected'));
+            document.getElementById('suggestion').textContent = "Chọn đủ tiêu chí để nhận gợi ý...";
         }
     </script>
 </body>
