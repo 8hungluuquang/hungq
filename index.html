@@ -99,51 +99,32 @@
             background: linear-gradient(to right, #d32f2f, #e74c3c);
             transform: scale(1.1);
         }
-
-        /* Phong cách cho đánh giá sao và phản hồi */
-        .rating-container {
-            margin-top: 20px;
-            text-align: center;
-        }
-        .rating-container span {
-            font-size: 20px;
-            cursor: pointer;
-            margin: 0 5px;
-            color: #ccc;
-            transition: color 0.3s ease;
-        }
-        .rating-container span:hover,
-        .rating-container span.selected {
-            color: #f39c12;
-        }
-        .feedback-container {
-            margin-top: 20px;
+        #rating-container {
             display: none;
+            margin-top: 20px;
             text-align: center;
         }
-        .feedback-container textarea {
+        #stars button {
+            font-size: 24px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        #stars button:hover {
+            transform: scale(1.3);
+        }
+        #feedback-container {
+            display: none;
+            margin-top: 20px;
+        }
+        #feedback {
             width: 100%;
             max-width: 600px;
-            height: 100px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
             padding: 10px;
-            margin-bottom: 10px;
-            font-size: 14px;
-        }
-        .feedback-container button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background: #3498db;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background 0.3s ease, transform 0.2s ease;
-        }
-        .feedback-container button:hover {
-            background: #2980b9;
-            transform: scale(1.1);
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
@@ -172,22 +153,26 @@
         <h3>Gợi ý:</h3>
         <p id="suggestion">Chọn đủ tiêu chí để nhận gợi ý...</p>
     </div>
-    <div class="rating-container">
-        <p>Đánh giá gợi ý:</p>
-        <span onclick="rate(1)">&#9733;</span>
-        <span onclick="rate(2)">&#9733;</span>
-        <span onclick="rate(3)">&#9733;</span>
-        <span onclick="rate(4)">&#9733;</span>
-        <span onclick="rate(5)">&#9733;</span>
-    </div>
-    <div class="feedback-container">
-        <textarea id="feedback" placeholder="Phản hồi của bạn..."></textarea>
-        <button onclick="submitFeedback()">Gửi phản hồi</button>
+    <div id="rating-container">
+        <h3>Đánh giá gợi ý:</h3>
+        <div id="stars">
+            <button onclick="rateSuggestion(1)">⭐</button>
+            <button onclick="rateSuggestion(2)">⭐⭐</button>
+            <button onclick="rateSuggestion(3)">⭐⭐⭐</button>
+            <button onclick="rateSuggestion(4)">⭐⭐⭐⭐</button>
+            <button onclick="rateSuggestion(5)">⭐⭐⭐⭐⭐</button>
+        </div>
+        <div id="feedback-container">
+            <textarea id="feedback" rows="4" placeholder="Hãy nhập phản hồi của bạn..."></textarea>
+            <button onclick="submitFeedback()">Gửi phản hồi</button>
+        </div>
+        <p id="thank-you" style="display:none; color: green; font-weight: bold; margin-top: 20px;">Cảm ơn vì đánh giá cao của bạn! 😄</p>
     </div>
     <button class="reset-btn" onclick="resetAll()">Làm mới lựa chọn</button>
 
     <script>
         const criteria = { price: null, health: null, purpose: null };
+        let hasRated = false;
 
         function resetSelection(button) {
             const buttons = button.parentElement.querySelectorAll('button');
@@ -206,78 +191,85 @@
             const suggestion = document.getElementById('suggestion');
             if (!price || !health || !purpose) {
                 suggestion.textContent = "Hãy chọn đủ các tiêu chí để nhận gợi ý!";
+                document.getElementById('rating-container').style.display = "none";
                 return;
             }
-             const rules = [
-    { rule: "cheap AND veryHealthy AND refresh", output: "Nước ngọt không có ga: Nước ép cam, Nước ép dứa, Trà xanh." },
-    { rule: "cheap AND veryHealthy AND nutrition", output: "Nước ép trái cây giá rẻ: Nước ép táo, Nước ép lựu." },
-    { rule: "cheap AND veryHealthy AND both", output: "Trà thảo mộc: Trà gừng, Trà hoa cúc." },
-    { rule: "cheap AND notTooHarmful AND refresh", output: "Nước ngọt có ga: Coca-Cola, Pepsi, Sprite." },
-    { rule: "cheap AND notTooHarmful AND nutrition", output: "Loại nước chưa tồn tại!" },
-    { rule: "cheap AND notTooHarmful AND both", output: "Loại nước chưa tồn tại!" },
-    { rule: "cheap AND healthy AND refresh", output: "Nước lọc giá rẻ: Nước tinh khiết, Nước khoáng đóng chai." },
-    { rule: "cheap AND healthy AND nutrition", output: "Loại nước chưa tồn tại!" },
-    { rule: "cheap AND healthy AND both", output: "Loại nước chưa tồn tại!" },
-    { rule: "cheap AND unhealthy AND refresh", output: "Nước ngọt giá rẻ: Soda vị đặc biệt, Nước ngọt đóng chai." },
-    { rule: "cheap AND unhealthy AND nutrition", output: "Loại nước chưa tồn tại!" },
-    { rule: "cheap AND unhealthy AND both", output: "Loại nước chưa tồn tại!" },
-    { rule: "medium AND veryHealthy AND refresh", output: "Nước dừa tươi, Nước ép cà rốt." },
-    { rule: "medium AND veryHealthy AND nutrition", output: "Nước ép rau củ: Nước ép củ cải đỏ, Nước ép dưa leo." },
-    { rule: "medium AND veryHealthy AND both", output: "Nước tốt cho sức khỏe: Trà hoa cúc, Kombucha." },
-    { rule: "medium AND notTooHarmful AND refresh", output: "Trà sữa ít đường: Trà sữa matcha, Trà sữa trân châu ít ngọt." },
-    { rule: "medium AND notTooHarmful AND nutrition", output: "Nước tăng lực ít đường: Red Bull không đường, Monster Ultra." },
-    { rule: "medium AND notTooHarmful AND both", output: "Loại nước chưa tồn tại!" },
-    { rule: "medium AND healthy AND refresh", output: "Kombucha: Kombucha gừng, Kombucha dứa." },
-    { rule: "medium AND healthy AND nutrition", output: "Sữa hạt: Sữa óc chó, Sữa hạnh nhân." },
-    { rule: "medium AND healthy AND both", output: "Sữa chua uống: Sữa chua uống vị dâu, Sữa chua uống vị việt quất." },
-    { rule: "medium AND unhealthy AND refresh", output: "Loại nước chưa tồn tại!" },
-    { rule: "medium AND unhealthy AND nutrition", output: "Loại nước chưa tồn tại!" },
-    { rule: "medium AND unhealthy AND both", output: "Loại nước chưa tồn tại!" },
-    { rule: "expensive AND veryHealthy AND refresh", output: "Nước khoáng cao cấp: Evian, Perrier." },
-    { rule: "expensive AND veryHealthy AND nutrition", output: "Nước ép rau củ cao cấp: Nước ép cần tây, Nước ép cà rốt." },
-    { rule: "expensive AND veryHealthy AND both", output: "Nước detox: Detox chanh, Detox bạc hà." },
-    { rule: "expensive AND notTooHarmful AND refresh", output: "Nước ngọt cao cấp: Soda vị cherry, Soda vanilla." },
-    { rule: "expensive AND notTooHarmful AND nutrition", output: "Loại nước chưa tồn tại!" },
-    { rule: "expensive AND notTooHarmful AND both", output: "Loại nước chưa tồn tại!" },
-    { rule: "expensive AND healthy AND refresh", output: "Nước khoáng nhập khẩu: San Pellegrino, Perrier." },
-    { rule: "expensive AND healthy AND nutrition", output: "Loại nước chưa tồn tại!" },
-    { rule: "expensive AND healthy AND both", output: "Loại nước chưa tồn tại!" },
-    { rule: "expensive AND unhealthy AND refresh", output: "Loại nước chưa tồn tại!" },
-    { rule: "expensive AND unhealthy AND nutrition", output: "Loại nước chưa tồn tại!" },
-    { rule: "expensive AND unhealthy AND both", output: "Rượu vang: Rượu vang đỏ, Rượu vang trắng." },
-];
+            const rules = [
+                { rule: "cheap AND veryHealthy AND refresh", output: "Nước ngọt không có ga: Nước ép cam, Nước ép dứa, Trà xanh." },
+                { rule: "cheap AND veryHealthy AND nutrition", output: "Nước ép trái cây giá rẻ: Nước ép táo, Nước ép lựu." },
+                { rule: "cheap AND veryHealthy AND both", output: "Trà thảo mộc: Trà gừng, Trà hoa cúc." },
+                { rule: "cheap AND notTooHarmful AND refresh", output: "Nước ngọt có ga: Coca-Cola, Pepsi, Sprite." },
+                { rule: "cheap AND notTooHarmful AND nutrition", output: "Loại nước chưa tồn tại!" },
+                { rule: "cheap AND notTooHarmful AND both", output: "Loại nước chưa tồn tại!" },
+                { rule: "cheap AND healthy AND refresh", output: "Nước lọc giá rẻ: Nước tinh khiết, Nước khoáng đóng chai." },
+                { rule: "cheap AND healthy AND nutrition", output: "Loại nước chưa tồn tại!" },
+                { rule: "cheap AND healthy AND both", output: "Loại nước chưa tồn tại!" },
+                { rule: "cheap AND unhealthy AND refresh", output: "Nước ngọt giá rẻ: Soda vị đặc biệt, Nước ngọt đóng chai." },
+                { rule: "cheap AND unhealthy AND nutrition", output: "Loại nước chưa tồn tại!" },
+                { rule: "cheap AND unhealthy AND both", output: "Loại nước chưa tồn tại!" },
+                { rule: "medium AND veryHealthy AND refresh", output: "Nước dừa tươi, Nước ép cà rốt." },
+                { rule: "medium AND veryHealthy AND nutrition", output: "Nước ép rau củ: Nước ép củ cải đỏ, Nước ép dưa leo." },
+                { rule: "medium AND veryHealthy AND both", output: "Nước tốt cho sức khỏe: Trà hoa cúc, Kombucha." },
+                { rule: "medium AND notTooHarmful AND refresh", output: "Trà sữa ít đường: Trà sữa matcha, Trà sữa trân châu ít ngọt." },
+                { rule: "medium AND notTooHarmful AND nutrition", output: "Nước tăng lực ít đường: Red Bull không đường, Monster Ultra." },
+                { rule: "medium AND notTooHarmful AND both", output: "Loại nước chưa tồn tại!" },
+                { rule: "medium AND healthy AND refresh", output: "Kombucha: Kombucha gừng, Kombucha dứa." },
+                { rule: "medium AND healthy AND nutrition", output: "Sữa hạt: Sữa óc chó, Sữa hạnh nhân." },
+                { rule: "medium AND healthy AND both", output: "Sữa chua uống: Sữa chua uống vị dâu, Sữa chua uống vị việt quất." },
+                { rule: "medium AND unhealthy AND refresh", output: "Loại nước chưa tồn tại!" },
+                { rule: "medium AND unhealthy AND nutrition", output: "Loại nước chưa tồn tại!" },
+                { rule: "medium AND unhealthy AND both", output: "Loại nước chưa tồn tại!" },
+                { rule: "expensive AND veryHealthy AND refresh", output: "Nước khoáng cao cấp: Evian, Perrier." },
+                { rule: "expensive AND veryHealthy AND nutrition", output: "Nước ép rau củ cao cấp: Nước ép cần tây, Nước ép cà rốt." },
+                { rule: "expensive AND veryHealthy AND both", output: "Nước detox: Detox chanh, Detox bạc hà." },
+                { rule: "expensive AND notTooHarmful AND refresh", output: "Nước ngọt cao cấp: Soda vị cherry, Soda vanilla." },
+                { rule: "expensive AND notTooHarmful AND nutrition", output: "Loại nước chưa tồn tại!" },
+                { rule: "expensive AND notTooHarmful AND both", output: "Loại nước chưa tồn tại!" },
+                { rule: "expensive AND healthy AND refresh", output: "Nước khoáng nhập khẩu: San Pellegrino, Perrier." },
+                { rule: "expensive AND healthy AND nutrition", output: "Loại nước chưa tồn tại!" },
+                { rule: "expensive AND healthy AND both", output: "Loại nước chưa tồn tại!" },
+                { rule: "expensive AND unhealthy AND refresh", output: "Loại nước chưa tồn tại!" },
+                { rule: "expensive AND unhealthy AND nutrition", output: "Loại nước chưa tồn tại!" },
+                { rule: "expensive AND unhealthy AND both", output: "Rượu vang: Rượu vang đỏ, Rượu vang trắng." },
+            ];
             const matched = rules.find(rule => rule.rule === `${price} AND ${health} AND ${purpose}`);
             suggestion.textContent = matched ? matched.output : "Không tìm thấy gợi ý phù hợp!";
+            document.getElementById('rating-container').style.display = "block";
+            document.getElementById('feedback-container').style.display = "none";
+            document.getElementById('thank-you').style.display = "none";
+            hasRated = false;
         }
 
-        function resetAll() {
-            Object.keys(criteria).forEach(key => criteria[key] = null);
-            document.querySelectorAll('.menu button').forEach(btn => btn.classList.remove('selected'));
-            document.getElementById('suggestion').textContent = "Chọn đủ tiêu chí để nhận gợi ý...";
-        }
-
-        function rate(stars) {
-            const ratingStars = document.querySelectorAll('.rating-container span');
-            ratingStars.forEach((star, index) => {
-                if (index < stars) star.classList.add('selected');
-                else star.classList.remove('selected');
-            });
+        function rateSuggestion(stars) {
+            hasRated = true;
             if (stars === 5) {
-                alert("Cảm ơn vì đánh giá cao của bạn :D");
+                document.getElementById('thank-you').style.display = "block";
+                document.getElementById('feedback-container').style.display = "none";
             } else {
-                document.querySelector('.feedback-container').style.display = 'block';
+                document.getElementById('thank-you').style.display = "none";
+                document.getElementById('feedback-container').style.display = "block";
             }
         }
 
         function submitFeedback() {
             const feedback = document.getElementById('feedback').value;
-            if (feedback.trim() === '') {
-                alert('Vui lòng điền phản hồi!');
+            if (feedback.trim() === "") {
+                alert("Vui lòng nhập phản hồi trước khi gửi!");
                 return;
             }
-            alert('Cảm ơn phản hồi của bạn!');
-            document.getElementById('feedback').value = '';
-            document.querySelector('.feedback-container').style.display = 'none';
+            alert("Cảm ơn bạn đã phản hồi!");
+            document.getElementById('feedback-container').style.display = "none";
+        }
+
+        function resetAll() {
+            if (!hasRated) {
+                alert("Vui lòng đánh giá trước khi làm mới lựa chọn!");
+                return;
+            }
+            Object.keys(criteria).forEach(key => criteria[key] = null);
+            document.querySelectorAll('.menu button').forEach(btn => btn.classList.remove('selected'));
+            document.getElementById('suggestion').textContent = "Chọn đủ tiêu chí để nhận gợi ý...";
+            document.getElementById('rating-container').style.display = "none";
         }
     </script>
 </body>
