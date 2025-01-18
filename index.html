@@ -6,26 +6,24 @@
     <title>Chương trình Gợi Ý Nước Uống</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        /* Định dạng cơ bản cho toàn bộ trang */
+        /* Căn giữa nội dung */
         body {
-            font-family: 'Roboto', sans-serif;
-            background: linear-gradient(to bottom, #eceff1, #ffffff); /* Tạo nền gradient */
-            margin: 0;
-            padding: 20px;
             display: flex;
             flex-direction: column;
-            align-items: center;
             justify-content: center;
-            min-height: 100vh;
+            align-items: center;
+            min-height: 100vh; /* Đảm bảo luôn chiếm đủ chiều cao màn hình */
+            background: linear-gradient(to bottom, #eceff1, #ffffff);
+            margin: 0;
         }
 
         h1 {
             text-align: center;
             color: #2c3e50;
             font-weight: 700;
-            font-size: 3rem;
+            font-size: 3rem; /* Tăng kích thước tiêu đề */
             margin-bottom: 20px;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng nhẹ */
         }
 
         .intro {
@@ -35,7 +33,6 @@
             border-radius: 20px;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
             max-width: 600px;
-            margin-bottom: 40px;
         }
 
         .intro p {
@@ -46,10 +43,11 @@
         }
 
         .intro button {
+            margin-top: 20px;
             padding: 15px 25px;
             font-size: 18px;
             font-weight: 600;
-            background: linear-gradient(to right, #4caf50, #81c784);
+            background: linear-gradient(to right, #4caf50, #81c784); /* Chuyển màu xanh mượt */
             color: white;
             border: none;
             border-radius: 10px;
@@ -62,51 +60,11 @@
             transform: scale(1.1);
         }
 
+        /* Căn chỉnh menu và output */
         .menu-container {
-            display: none;
             width: 100%;
             max-width: 600px;
             text-align: center;
-        }
-
-        .menu {
-            margin: 20px 0;
-            padding: 20px;
-            background: #ffffff;
-            border-radius: 15px;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .menu h3 {
-            color: #34495e;
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-            font-weight: 500;
-        }
-
-        .menu button {
-            margin: 10px 15px;
-            padding: 15px 25px;
-            font-size: 16px;
-            font-weight: 500;
-            background: linear-gradient(to right, #3498db, #5dade2);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: background 0.3s ease, transform 0.2s ease;
-        }
-
-        .menu button:hover {
-            background: linear-gradient(to right, #2980b9, #3498db);
-            transform: scale(1.08);
-        }
-
-        .menu button.selected {
-            background: linear-gradient(to right, #27ae60, #2ecc71);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            transform: scale(1.1);
         }
 
         .output {
@@ -118,21 +76,23 @@
         }
 
         .reset-btn {
+            display: block;
             margin: 20px auto;
-            padding: 15px 35px;
-            font-size: 18px;
+            padding: 15px 40px; /* Kích thước lớn hơn */
+            font-size: 18px; /* Tăng kích thước chữ */
             font-weight: bold;
-            background: linear-gradient(to right, #f44336, #ef5350);
+            background: linear-gradient(to right, #f44336, #e57373); /* Gradient đỏ */
             color: white;
             border: none;
             border-radius: 10px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            transition: background 0.3s ease, transform 0.2s ease;
         }
 
         .reset-btn:hover {
-            background: linear-gradient(to right, #c62828, #e53935);
-            transform: scale(1.1);
+            background: linear-gradient(to right, #d32f2f, #f44336); /* Màu đậm hơn khi hover */
+            transform: scale(1.1); /* Phóng to nhẹ khi hover */
         }
     </style>
 </head>
@@ -141,7 +101,7 @@
 
     <!-- Phần giới thiệu -->
     <div class="intro">
-        <p>Chào mừng bạn đến với Chương trình Gợi Ý Nước Uống. Chúng tôi sẽ giúp bạn lựa chọn đồ uống phù hợp nhất với sở thích và nhu cầu của bạn. Hãy bắt đầu bằng cách nhấn nút dưới đây!</p>
+        <p>Chào mừng bạn đến với Chương trình Gợi Ý Nước Uống! Chúng tôi sẽ giúp bạn lựa chọn đồ uống phù hợp nhất với sở thích và nhu cầu của bạn :D </p>
         <button onclick="showMenu()">Bắt đầu</button>
     </div>
 
@@ -183,12 +143,39 @@
             { rule: "cheap AND veryHealthy AND refresh", output: "Nước ngọt không có ga: Nước ép cam, Nước ép dứa, Trà xanh." },
             { rule: "cheap AND veryHealthy AND nutrition", output: "Nước ép trái cây giá rẻ: Nước ép táo, Nước ép lựu." },
             { rule: "cheap AND veryHealthy AND both", output: "Trà thảo mộc: Trà gừng, Trà hoa cúc." },
+            { rule: "cheap AND notTooHarmful AND refresh", output: "Nước ngọt có ga: Coca-Cola, Pepsi, Sprite." },
+            { rule: "cheap AND notTooHarmful AND nutrition", output: "Loại nước chưa tồn tại!" },
+            { rule: "cheap AND notTooHarmful AND both", output: "Loại nước chưa tồn tại!" },
+            { rule: "cheap AND healthy AND refresh", output: "Nước lọc giá rẻ: Nước tinh khiết, Nước khoáng đóng chai." },
+            { rule: "cheap AND healthy AND nutrition", output: "Loại nước chưa tồn tại!" },
+            { rule: "cheap AND healthy AND both", output: "Loại nước chưa tồn tại!" },
+            { rule: "cheap AND unhealthy AND refresh", output: "Nước ngọt giá rẻ: Soda vị đặc biệt, Nước ngọt đóng chai." },
+            { rule: "cheap AND unhealthy AND nutrition", output: "Loại nước chưa tồn tại!" },
+            { rule: "cheap AND unhealthy AND both", output: "Loại nước chưa tồn tại!" },
             { rule: "medium AND veryHealthy AND refresh", output: "Nước dừa tươi, Nước ép cà rốt." },
             { rule: "medium AND veryHealthy AND nutrition", output: "Nước ép rau củ: Nước ép củ cải đỏ, Nước ép dưa leo." },
             { rule: "medium AND veryHealthy AND both", output: "Nước tốt cho sức khỏe: Trà hoa cúc, Kombucha." },
+            { rule: "medium AND notTooHarmful AND refresh", output: "Trà sữa ít đường: Trà sữa matcha, Trà sữa trân châu ít ngọt." },
+            { rule: "medium AND notTooHarmful AND nutrition", output: "Nước tăng lực ít đường: Red Bull không đường, Monster Ultra." },
+            { rule: "medium AND notTooHarmful AND both", output: "Loại nước chưa tồn tại!" },
+            { rule: "medium AND healthy AND refresh", output: "Kombucha: Kombucha gừng, Kombucha dứa." },
+            { rule: "medium AND healthy AND nutrition", output: "Sữa hạt: Sữa óc chó, Sữa hạnh nhân." },
+            { rule: "medium AND healthy AND both", output: "Sữa chua uống: Sữa chua uống vị dâu, Sữa chua uống vị việt quất." },
+            { rule: "medium AND unhealthy AND refresh", output: "Loại nước chưa tồn tại!" },
+            { rule: "medium AND unhealthy AND nutrition", output: "Loại nước chưa tồn tại!" },
+            { rule: "medium AND unhealthy AND both", output: "Loại nước chưa tồn tại!" },
             { rule: "expensive AND veryHealthy AND refresh", output: "Nước khoáng cao cấp: Evian, Perrier." },
             { rule: "expensive AND veryHealthy AND nutrition", output: "Nước ép rau củ cao cấp: Nước ép cần tây, Nước ép cà rốt." },
-            { rule: "expensive AND veryHealthy AND both", output: "Nước detox: Detox chanh, Detox bạc hà." }
+            { rule: "expensive AND veryHealthy AND both", output: "Nước detox: Detox chanh, Detox bạc hà." },
+            { rule: "expensive AND notTooHarmful AND refresh", output: "Nước ngọt cao cấp: Soda vị cherry, Soda vanilla." },
+            { rule: "expensive AND notTooHarmful AND nutrition", output: "Loại nước chưa tồn tại!" },
+            { rule: "expensive AND notTooHarmful AND both", output: "Loại nước chưa tồn tại!" },
+            { rule: "expensive AND healthy AND refresh", output: "Nước khoáng nhập khẩu: San Pellegrino, Perrier." },
+            { rule: "expensive AND healthy AND nutrition", output: "Loại nước chưa tồn tại!" },
+            { rule: "expensive AND healthy AND both", output: "Loại nước chưa tồn tại!" },
+            { rule: "expensive AND unhealthy AND refresh", output: "Loại nước chưa tồn tại!" },
+            { rule: "expensive AND unhealthy AND nutrition", output: "Loại nước chưa tồn tại!" },
+            { rule: "expensive AND unhealthy AND both", output: "Rượu vang: Rượu vang đỏ, Rượu vang trắng." },
         ];
 
         const criteria = { price: null, health: null, purpose: null };
@@ -196,9 +183,11 @@
         function setCriteria(type, value, event) {
             criteria[type] = value;
 
+            // Xóa lớp 'selected' khỏi các nút trong menu tương ứng
             const buttons = event.target.parentElement.querySelectorAll('button');
             buttons.forEach(btn => btn.classList.remove('selected'));
 
+            // Thêm lớp 'selected' vào nút hiện tại
             event.target.classList.add('selected');
 
             updateSuggestion();
