@@ -20,7 +20,46 @@
             color: #2c3e50; /* Màu chữ đậm */
             font-weight: 700;
             font-size: 2.5rem; /* Kích thước chữ lớn */
+            margin-bottom: 20px;
+        }
+
+        /* Phần giới thiệu */
+        .intro {
+            text-align: center;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
             margin-bottom: 30px;
+        }
+
+        .intro p {
+            font-size: 18px;
+            color: #34495e;
+            line-height: 1.6;
+        }
+
+        .intro button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: 500;
+            background: linear-gradient(to right, #3498db, #5dade2);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .intro button:hover {
+            background: linear-gradient(to right, #2980b9, #3498db);
+            transform: scale(1.05);
+        }
+
+        /* Ẩn menu khi chưa bấm bắt đầu */
+        .menu-container {
+            display: none;
         }
 
         /* Giao diện của từng khối chọn tiêu chí */
@@ -121,32 +160,47 @@
 </head>
 <body>
     <h1>Chương trình Gợi Ý Nước Uống</h1>
-    <div class="menu">
-        <h3>1. Chọn Giá Đồ Uống:</h3>
-        <button onclick="setCriteria('price', 'cheap')">Rẻ (5k-15k)</button>
-        <button onclick="setCriteria('price', 'medium')">Trung bình (20k trở lên)</button>
-        <button onclick="setCriteria('price', 'expensive')">Đắt (100k trở lên)</button>
+
+    <!-- Phần giới thiệu -->
+    <div class="intro">
+        <p>Chào mừng bạn đến với Chương trình Gợi Ý Nước Uống. Chúng tôi sẽ giúp bạn lựa chọn đồ uống phù hợp nhất với sở thích và nhu cầu của bạn. Hãy bắt đầu bằng cách nhấn nút dưới đây!</p>
+        <button onclick="showMenu()">Bắt đầu</button>
     </div>
-    <div class="menu">
-        <h3>2. Chọn Độ Lành Mạnh:</h3>
-        <button onclick="setCriteria('health', 'veryHealthy')">Tốt cho sức khỏe</button>
-        <button onclick="setCriteria('health', 'notTooHarmful')">Không quá hại sức khỏe</button>
-        <button onclick="setCriteria('health', 'healthy')">Lành mạnh</button>
-        <button onclick="setCriteria('health', 'unhealthy')">Không lành mạnh</button>
+
+    <!-- Phần menu chính -->
+    <div class="menu-container">
+        <div class="menu">
+            <h3>1. Chọn Giá Đồ Uống:</h3>
+            <button onclick="setCriteria('price', 'cheap')">Rẻ (5k-15k)</button>
+            <button onclick="setCriteria('price', 'medium')">Trung bình (20k trở lên)</button>
+            <button onclick="setCriteria('price', 'expensive')">Đắt (100k trở lên)</button>
+        </div>
+        <div class="menu">
+            <h3>2. Chọn Độ Lành Mạnh:</h3>
+            <button onclick="setCriteria('health', 'veryHealthy')">Tốt cho sức khỏe</button>
+            <button onclick="setCriteria('health', 'notTooHarmful')">Không quá hại sức khỏe</button>
+            <button onclick="setCriteria('health', 'healthy')">Lành mạnh</button>
+            <button onclick="setCriteria('health', 'unhealthy')">Không lành mạnh</button>
+        </div>
+        <div class="menu">
+            <h3>3. Chọn Mục Đích Uống:</h3>
+            <button onclick="setCriteria('purpose', 'refresh')">Giải khát</button>
+            <button onclick="setCriteria('purpose', 'nutrition')">Vì chất dinh dưỡng</button>
+            <button onclick="setCriteria('purpose', 'both')">Vì cả hai</button>
+        </div>
+        <div class="output">
+            <h3>Gợi ý:</h3>
+            <p id="suggestion">Chọn đủ tiêu chí để nhận gợi ý...</p>
+        </div>
+        <button class="reset-btn" onclick="resetAll()">Làm mới lựa chọn</button>
     </div>
-    <div class="menu">
-        <h3>3. Chọn Mục Đích Uống:</h3>
-        <button onclick="setCriteria('purpose', 'refresh')">Giải khát</button>
-        <button onclick="setCriteria('purpose', 'nutrition')">Vì chất dinh dưỡng</button>
-        <button onclick="setCriteria('purpose', 'both')">Vì cả hai</button>
-    </div>
-    <div class="output">
-        <h3>Gợi ý:</h3>
-        <p id="suggestion">Chọn đủ tiêu chí để nhận gợi ý...</p>
-    </div>
-    <button class="reset-btn" onclick="resetAll()">Làm mới lựa chọn</button>
 
     <script>
+        function showMenu() {
+            document.querySelector('.intro').style.display = 'none';
+            document.querySelector('.menu-container').style.display = 'block';
+        }
+
         const criteria = {
             price: null,
             health: null,
