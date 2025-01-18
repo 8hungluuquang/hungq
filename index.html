@@ -134,28 +134,6 @@
             font-weight: 600;
             font-size: 1.5rem;
         }
-
-        /* Nút làm mới */
-        .reset-btn {
-            display: block;
-            margin: 40px auto;
-            padding: 15px 35px;
-            font-size: 16px;
-            font-weight: 600;
-            background: linear-gradient(to right, #e74c3c, #ff6b6b); /* Gradient đỏ */
-            color: white;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-            transition: background 0.3s ease, transform 0.2s ease;
-        }
-
-        /* Hiệu ứng hover cho nút làm mới */
-        .reset-btn:hover {
-            background: linear-gradient(to right, #c0392b, #e74c3c);
-            transform: scale(1.1);
-        }
     </style>
 </head>
 <body>
@@ -201,34 +179,7 @@
             document.querySelector('.menu-container').style.display = 'block';
         }
 
-        const criteria = {
-            price: null,
-            health: null,
-            purpose: null,
-        };
-
-        function resetSelection(button) {
-            const buttons = button.parentElement.querySelectorAll('button');
-            buttons.forEach(btn => btn.classList.remove('selected'));
-            button.classList.add('selected');
-        }
-
-        function setCriteria(type, value) {
-            criteria[type] = value;
-            resetSelection(event.target);
-            updateSuggestion();
-        }
-
-        function updateSuggestion() {
-            const { price, health, purpose } = criteria;
-            const suggestion = document.getElementById('suggestion');
-
-            if (!price || !health || !purpose) {
-                suggestion.textContent = "Hãy chọn đủ các tiêu chí để nhận gợi ý!";
-                return;
-            }
-
-             const rules = [
+         const rules = [
     { rule: "cheap AND veryHealthy AND refresh", output: "Nước ngọt không có ga: Nước ép cam, Nước ép dứa, Trà xanh." },
     { rule: "cheap AND veryHealthy AND nutrition", output: "Nước ép trái cây giá rẻ: Nước ép táo, Nước ép lựu." },
     { rule: "cheap AND veryHealthy AND both", output: "Trà thảo mộc: Trà gừng, Trà hoa cúc." },
@@ -268,24 +219,32 @@
 ];
 
 
-            const matched = rules.find(r => {
-                const [priceMatch, healthMatch, purposeMatch] = r.rule.split(" AND ");
-                return (
-                    priceMatch.includes(price) &&
-                    healthMatch.includes(health) &&
-                    purposeMatch.includes(purpose)
-                );
-            });
+        const criteria = { price: null, health: null, purpose: null };
 
-            suggestion.innerHTML = matched ? matched.output : "Loại nước chưa tồn tại!";
+        function setCriteria(type, value) {
+            criteria[type] = value;
+            updateSuggestion();
+        }
+
+        function updateSuggestion() {
+            const { price, health, purpose } = criteria;
+            const suggestion = document.getElementById('suggestion');
+
+            if (!price || !health || !purpose) {
+                suggestion.textContent = "Hãy chọn đủ các tiêu chí để nhận gợi ý!";
+                return;
+            }
+
+            const condition = `${price} AND ${health} AND ${purpose}`;
+            const match = rules.find(rule => rule.rule === condition);
+
+            suggestion.textContent = match ? match.output : "Không tìm thấy gợi ý phù hợp!";
         }
 
         function resetAll() {
+            document.querySelectorAll('.menu button').forEach(btn => btn.classList.remove('selected'));
+            document.getElementById('suggestion').textContent = "Chọn đủ tiêu chí để nhận gợi ý...";
             Object.keys(criteria).forEach(key => criteria[key] = null);
-            const buttons = document.querySelectorAll('.menu button');
-            buttons.forEach(btn => btn.classList.remove('selected'));
-            const suggestion = document.getElementById('suggestion');
-            suggestion.textContent = "Chọn đủ tiêu chí để nhận gợi ý...";
         }
     </script>
 </body>
