@@ -8,7 +8,7 @@
     <style>
         body {
             font-family: 'Roboto', sans-serif;
-            background: linear-gradient(to bottom, #f4f7fc, #ffffff); /* Nền đẹp hơn */
+            background: linear-gradient(to bottom, #f4f7fc, #ffffff);
             margin: 0;
             padding: 20px;
             display: flex;
@@ -21,7 +21,7 @@
             font-weight: 700;
             margin-bottom: 30px;
             font-size: 3rem;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng chữ */
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
         }
         .menu {
             margin: 20px 0;
@@ -31,7 +31,7 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 600px; /* Giới hạn độ rộng */
+            max-width: 600px;
         }
         .menu h3 {
             color: #34495e;
@@ -43,7 +43,7 @@
             margin: 5px 10px;
             padding: 12px 20px;
             font-size: 14px;
-            background: linear-gradient(to right, #3498db, #5dade2); /* Gradient nút */
+            background: linear-gradient(to right, #3498db, #5dade2);
             color: white;
             border: none;
             border-radius: 8px;
@@ -87,7 +87,7 @@
             padding: 15px 30px;
             font-size: 16px;
             font-weight: bold;
-            background: linear-gradient(to right, #e74c3c, #f57373); /* Nút gradient */
+            background: linear-gradient(to right, #e74c3c, #f57373);
             color: white;
             border: none;
             border-radius: 8px;
@@ -109,10 +109,15 @@
             border: none;
             background: none;
             cursor: pointer;
-            transition: transform 0.2s ease;
+            color: #ccc;
+            transition: transform 0.2s ease, color 0.2s ease;
         }
         #stars button:hover {
             transform: scale(1.3);
+            color: gold;
+        }
+        #stars button.selected {
+            color: gold;
         }
         #feedback-container {
             display: none;
@@ -156,11 +161,11 @@
     <div id="rating-container">
         <h3>Đánh giá gợi ý:</h3>
         <div id="stars">
-            <button onclick="rateSuggestion(1)">⭐</button>
-            <button onclick="rateSuggestion(2)">⭐⭐</button>
-            <button onclick="rateSuggestion(3)">⭐⭐⭐</button>
-            <button onclick="rateSuggestion(4)">⭐⭐⭐⭐</button>
-            <button onclick="rateSuggestion(5)">⭐⭐⭐⭐⭐</button>
+            <button onclick="rateSuggestion(1)">☆</button>
+            <button onclick="rateSuggestion(2)">☆</button>
+            <button onclick="rateSuggestion(3)">☆</button>
+            <button onclick="rateSuggestion(4)">☆</button>
+            <button onclick="rateSuggestion(5)">☆</button>
         </div>
         <div id="feedback-container">
             <textarea id="feedback" rows="4" placeholder="Hãy nhập phản hồi của bạn..."></textarea>
@@ -194,7 +199,7 @@
                 document.getElementById('rating-container').style.display = "none";
                 return;
             }
-            const rules = [
+             const rules = [
                 { rule: "cheap AND veryHealthy AND refresh", output: "Nước ngọt không có ga: Nước ép cam, Nước ép dứa, Trà xanh." },
                 { rule: "cheap AND veryHealthy AND nutrition", output: "Nước ép trái cây giá rẻ: Nước ép táo, Nước ép lựu." },
                 { rule: "cheap AND veryHealthy AND both", output: "Trà thảo mộc: Trà gừng, Trà hoa cúc." },
@@ -242,13 +247,22 @@
 
         function rateSuggestion(stars) {
             hasRated = true;
+            const thankYouMessage = document.getElementById('thank-you');
+            const feedbackContainer = document.getElementById('feedback-container');
+
             if (stars === 5) {
-                document.getElementById('thank-you').style.display = "block";
-                document.getElementById('feedback-container').style.display = "none";
+                thankYouMessage.style.display = "block";
+                feedbackContainer.style.display = "none";
             } else {
-                document.getElementById('thank-you').style.display = "none";
-                document.getElementById('feedback-container').style.display = "block";
+                thankYouMessage.style.display = "none";
+                feedbackContainer.style.display = "block";
             }
+
+            const starButtons = document.querySelectorAll('#stars button');
+            starButtons.forEach((btn, index) => {
+                btn.textContent = index < stars ? '⭐' : '☆';
+                btn.classList.toggle('selected', index < stars);
+            });
         }
 
         function submitFeedback() {
