@@ -199,7 +199,7 @@
                 document.getElementById('rating-container').style.display = "none";
                 return;
             }
-             const rules = [
+            const rules = [
                 { rule: "cheap AND veryHealthy AND refresh", output: "Nước ngọt không có ga: Nước ép cam, Nước ép dứa, Trà xanh." },
                 { rule: "cheap AND veryHealthy AND nutrition", output: "Nước ép trái cây giá rẻ: Nước ép táo, Nước ép lựu." },
                 { rule: "cheap AND veryHealthy AND both", output: "Trà thảo mộc: Trà gừng, Trà hoa cúc." },
@@ -245,45 +245,27 @@
             hasRated = false;
         }
 
-        function rateSuggestion(stars) {
-            hasRated = true;
-            const thankYouMessage = document.getElementById('thank-you');
-            const feedbackContainer = document.getElementById('feedback-container');
+        // Tích hợp URL Google Apps Script
+        const scriptURL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
 
-            if (stars === 5) {
-                thankYouMessage.style.display = "block";
-                feedbackContainer.style.display = "none";
-            } else {
-                thankYouMessage.style.display = "none";
-                feedbackContainer.style.display = "block";
-            }
-
-            const starButtons = document.querySelectorAll('#stars button');
-            starButtons.forEach((btn, index) => {
-                btn.textContent = index < stars ? '⭐' : '☆';
-                btn.classList.toggle('selected', index < stars);
-            });
-        }
-
-        function submitFeedback() {
-            const feedback = document.getElementById('feedback').value;
-            if (feedback.trim() === "") {
+        async function submitFeedback() {
+            const feedback = document.getElementById('feedback').value.trim();
+            if (!feedback) {
                 alert("Vui lòng nhập phản hồi trước khi gửi!");
                 return;
             }
-            alert("Cảm ơn bạn đã phản hồi!");
-            document.getElementById('feedback-container').style.display = "none";
-        }
-
-        function resetAll() {
-            if (!hasRated) {
-                alert("Vui lòng đánh giá trước khi làm mới lựa chọn!");
-                return;
+            try {
+                const response = await fetch(scriptURL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ feedback }),
+                });
+                if (response.ok) {
+                    alert("Phản hồi đã được gửi!");
+                }
+            } catch {
+                alert("Gửi thất bại");
             }
-            Object.keys(criteria).forEach(key => criteria[key] = null);
-            document.querySelectorAll('.menu button').forEach(btn => btn.classList.remove('selected'));
-            document.getElementById('suggestion').textContent = "Chọn đủ tiêu chí để nhận gợi ý...";
-            document.getElementById('rating-container').style.display = "none";
         }
     </script>
 </body>
