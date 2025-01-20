@@ -15,7 +15,7 @@
             flex-direction: column;
             align-items: center;
             color: #fff;
-            background: url('https://itadakimasuanime.wordpress.com/wp-content/uploads/2018/12/Cocktails-The-Night-is-Short-Walk-on-Girl.png');
+            background: url('https://itadakimasuanime.wordpress.com/wp-content/uploads/2018/12/Cocktails-The-Night-is-Short-Walk-on-Girl.png'); /* Giữ hình nền */
             background-size: cover;
             background-attachment: fixed;
             background-position: center;
@@ -24,7 +24,7 @@
         header {
             background: rgba(0, 0, 0, 0.6);
             width: 100%;
-            padding: 15px 30px;
+            padding: 15px 30px; /* Cập nhật thêm padding */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             display: flex;
             justify-content: space-between;
@@ -32,22 +32,22 @@
         }
 
         header .logo img {
-            height: 80px;
+            height: 80px; /* Tăng kích thước logo */
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            margin-left: 20px;
+            margin-left: 20px; /* Thêm khoảng cách logo với lề */
         }
 
         header nav a {
             margin: 0 15px;
             font-weight: 500;
             text-decoration: none;
-            color: #1abc9c;
+            color: #1abc9c; /* Đổi từ vàng sang xanh ngọc nhạt */
             transition: color 0.3s;
         }
 
         header nav a:hover {
-            color: #16a085;
+            color: #16a085; /* Màu xanh đậm hơn khi hover */
         }
 
         .hero {
@@ -62,13 +62,13 @@
         .hero h1 {
             font-size: 3.5rem;
             margin-bottom: 10px;
-            color: #1abc9c;
+            color: #1abc9c; /* Đổi màu chữ vàng sang xanh ngọc nhạt */
         }
 
         .hero p {
             font-size: 18px;
             margin-bottom: 20px;
-            color: #ffffff;
+            color: #ffffff; /* Màu chữ trắng */
         }
 
         .section {
@@ -84,7 +84,7 @@
         .section h3 {
             font-size: 1.8rem;
             margin-bottom: 15px;
-            color: #1abc9c;
+            color: #1abc9c; /* Đổi từ vàng sang xanh ngọc nhạt */
         }
 
         .buttons {
@@ -124,7 +124,7 @@
         .suggestion h3 {
             font-size: 1.8rem;
             margin-bottom: 10px;
-            color: #1abc9c;
+            color: #1abc9c; /* Đổi từ vàng sang xanh ngọc nhạt */
         }
 
         .suggestion p {
@@ -155,15 +155,6 @@
             text-align: center;
             margin-top: 30px;
             display: none;
-            position: absolute;
-            background: rgba(0, 0, 0, 0.9);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-        }
-
-        .rating-container h3 {
-            color: #1abc9c;
         }
 
         .stars button {
@@ -194,11 +185,9 @@
             width: 100%;
             max-width: 500px;
             padding: 10px;
-            background: #000; /* Đổi sang nền đen */
             border: 1px solid #ddd;
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            color: #1abc9c; /* Màu chữ xanh ngọc */
             resize: none;
         }
 
@@ -374,6 +363,7 @@
         let hasRated = false;
 
         function rateSuggestion(stars) {
+            // Kiểm tra nếu đã đánh giá rồi, không cho đánh giá lại
             if (hasRated) {
                 alert("Bạn đã đánh giá rồi! Cảm ơn bạn.");
                 return;
@@ -385,7 +375,7 @@
                 btn.classList.toggle('selected', index < stars);
             });
 
-            hasRated = true;
+            hasRated = true; // Đánh dấu đã đánh giá
 
             const feedbackContainer = document.getElementById('feedback-container');
             const thankYouMessage = document.getElementById('thank-you');
@@ -414,6 +404,7 @@
             alert('Cảm ơn bạn đã phản hồi!');
             document.getElementById('feedback').value = '';
             document.getElementById('feedback-container').style.display = 'none';
+
             document.getElementById('rating-container').style.display = 'none'; // Ẩn phần đánh giá sau khi phản hồi
         }
     </script>
