@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gợi Ý Đồ Uống - Hoàn Chỉnh</title>
     <style>
-        /* Toàn bộ giao diện */
+        /* Giao diện chung */
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 20px;
-            background-color: #f9f9f9;
+            background-color: #f7f7f7;
             color: #333;
         }
 
@@ -18,7 +18,7 @@
             text-align: center;
             color: #dd183b;
             font-size: 2.5rem;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
 
         /* Khu vực menu chọn tiêu chí */
@@ -28,7 +28,6 @@
             background: #fff;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            position: relative;
         }
 
         .menu h3 {
@@ -59,20 +58,6 @@
             background-color: #0056b3;
         }
 
-        /* Khu vực hiển thị gợi ý */
-        .output {
-            margin-top: 30px;
-            text-align: center;
-        }
-
-        #suggestion {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #007bff;
-            margin-bottom: 20px;
-            animation: fadeIn 0.5s ease;
-        }
-
         /* Hiệu ứng fadeIn */
         @keyframes fadeIn {
             from {
@@ -86,7 +71,6 @@
 </head>
 <body>
     <h1>Chương trình Gợi Ý Đồ Uống</h1>
-
     <!-- Tiêu chí -->
     <div class="menu">
         <h3>1. Chọn Giá Đồ Uống:</h3>
@@ -101,6 +85,7 @@
         <button onclick="toggleCriteria('health', 'healthy')">Lành mạnh</button>
         <button onclick="toggleCriteria('health', 'unhealthy')">Không lành mạnh</button>
     </div>
+
     <div class="menu">
         <h3>3. Chọn Mục Đích Uống:</h3>
         <button onclick="toggleCriteria('purpose', 'refresh')">Giải khát</button>
@@ -117,94 +102,33 @@
 
     <!-- Nút làm mới -->
     <button class="reset-btn" onclick="resetAll()">Làm mới lựa chọn</button>
-
-    <style>
-        /* Khu vực thẻ gợi ý */
-        .card-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-        }
-
-        .card {
-            width: 200px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            padding: 15px;
-            transform: scale(0.95);
-            transition: transform 0.2s ease-in-out;
-        }
-
-        .card:hover {
-            transform: scale(1);
-        }
-
-        .card img {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 5px;
-        }
-
-        .card h4 {
-            margin: 10px 0;
-            font-size: 16px;
-        }
-
-        .card p {
-            font-size: 14px;
-            color: #555;
-        }
-
-        /* Nút làm mới */
-        .reset-btn {
-            display: block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            background: #dc3545;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .reset-btn:hover {
-            background: #b02a37;
-        }
-    </style>
     <script>
         // Tiêu chí người dùng chọn
         const criteria = { price: null, health: null, purpose: null };
 
         // Danh sách 20 luật gợi ý
         const rules = [
-            { rule: "cheap AND veryHealthy AND refresh", name: "Nước ép cam", img: "orange_juice.jpg", price: "10k" },
-            { rule: "cheap AND healthy AND nutrition", name: "Nước lọc tinh khiết", img: "pure_water.jpg", price: "5k" },
-            { rule: "cheap AND unhealthy AND refresh", name: "Nước ngọt", img: "soft_drink.jpg", price: "12k" },
-            { rule: "medium AND veryHealthy AND refresh", name: "Nước dừa", img: "coconut_water.jpg", price: "25k" },
-            { rule: "medium AND healthy AND both", name: "Trà sữa ít đường", img: "milk_tea.jpg", price: "30k" },
-            { rule: "medium AND unhealthy AND nutrition", name: "Trà sữa nhiều topping", img: "topping_milk_tea.jpg", price: "40k" },
-            { rule: "expensive AND veryHealthy AND refresh", name: "Nước detox cao cấp", img: "detox_water.jpg", price: "120k" },
-            { rule: "expensive AND healthy AND both", name: "Nước ép nhập khẩu", img: "imported_juice.jpg", price: "150k" },
-            { rule: "expensive AND unhealthy AND refresh", name: "Cocktail", img: "cocktail.jpg", price: "200k" },
-            { rule: "cheap AND veryHealthy AND nutrition", name: "Trà xanh", img: "green_tea.jpg", price: "15k" },
-            { rule: "medium AND healthy AND nutrition", name: "Sữa hạt", img: "nut_milk.jpg", price: "35k" },
-            { rule: "expensive AND veryHealthy AND nutrition", name: "Smoothie cao cấp", img: "premium_smoothie.jpg", price: "200k" },
-            { rule: "cheap AND unhealthy AND nutrition", name: "Nước ngọt tăng lực", img: "energy_drink.jpg", price: "15k" },
-            { rule: "medium AND veryHealthy AND both", name: "Trà trái cây", img: "fruit_tea.jpg", price: "45k" },
-            { rule: "expensive AND notTooHarmful AND refresh", name: "Nước khoáng nhập khẩu", img: "imported_water.jpg", price: "100k" },
-            { rule: "medium AND notTooHarmful AND refresh", name: "Trà hoa cúc", img: "chamomile_tea.jpg", price: "30k" },
-            { rule: "expensive AND unhealthy AND nutrition", name: "Cocktail sữa", img: "milk_cocktail.jpg", price: "250k" },
-            { rule: "cheap AND notTooHarmful AND refresh", name: "Trà chanh", img: "lemon_tea.jpg", price: "10k" },
-            { rule: "medium AND notTooHarmful AND nutrition", name: "Nước ép cần tây", img: "celery_juice.jpg", price: "40k" },
-            { rule: "expensive AND healthy AND nutrition", name: "Nước ép hữu cơ", img: "organic_juice.jpg", price: "180k" }
+            { rule: "cheap AND veryHealthy AND refresh", name: "Nước ép cam", img: "https://via.placeholder.com/200x150?text=Orange+Juice", price: "10k" },
+            { rule: "cheap AND healthy AND nutrition", name: "Nước lọc tinh khiết", img: "https://via.placeholder.com/200x150?text=Pure+Water", price: "5k" },
+            { rule: "cheap AND unhealthy AND refresh", name: "Nước ngọt", img: "https://via.placeholder.com/200x150?text=Soft+Drink", price: "12k" },
+            { rule: "medium AND veryHealthy AND refresh", name: "Nước dừa", img: "https://via.placeholder.com/200x150?text=Coconut+Water", price: "25k" },
+            { rule: "medium AND healthy AND both", name: "Trà sữa ít đường", img: "https://via.placeholder.com/200x150?text=Milk+Tea", price: "30k" },
+            { rule: "medium AND unhealthy AND nutrition", name: "Trà sữa nhiều topping", img: "https://via.placeholder.com/200x150?text=Topping+Milk+Tea", price: "40k" },
+            { rule: "expensive AND veryHealthy AND refresh", name: "Nước detox cao cấp", img: "https://via.placeholder.com/200x150?text=Detox+Water", price: "120k" },
+            { rule: "expensive AND healthy AND both", name: "Nước ép nhập khẩu", img: "https://via.placeholder.com/200x150?text=Imported+Juice", price: "150k" },
+            { rule: "expensive AND unhealthy AND refresh", name: "Cocktail", img: "https://via.placeholder.com/200x150?text=Cocktail", price: "200k" },
+            { rule: "cheap AND veryHealthy AND nutrition", name: "Trà xanh", img: "https://via.placeholder.com/200x150?text=Green+Tea", price: "15k" },
+            { rule: "medium AND healthy AND nutrition", name: "Sữa hạt", img: "https://via.placeholder.com/200x150?text=Nut+Milk", price: "35k" },
+            { rule: "expensive AND veryHealthy AND nutrition", name: "Smoothie cao cấp", img: "https://via.placeholder.com/200x150?text=Premium+Smoothie", price: "200k" },
+            { rule: "cheap AND unhealthy AND nutrition", name: "Nước ngọt tăng lực", img: "https://via.placeholder.com/200x150?text=Energy+Drink", price: "15k" },
+            { rule: "medium AND veryHealthy AND both", name: "Trà trái cây", img: "https://via.placeholder.com/200x150?text=Fruit+Tea", price: "45k" },
+            { rule: "expensive AND notTooHarmful AND refresh", name: "Nước khoáng nhập khẩu", img: "https://via.placeholder.com/200x150?text=Imported+Water", price: "100k" },
+            { rule: "medium AND notTooHarmful AND refresh", name: "Trà hoa cúc", img: "https://via.placeholder.com/200x150?text=Chamomile+Tea", price: "30k" },
+            { rule: "expensive AND unhealthy AND nutrition", name: "Cocktail sữa", img: "https://via.placeholder.com/200x150?text=Milk+Cocktail", price: "250k" },
+            { rule: "cheap AND notTooHarmful AND refresh", name: "Trà chanh", img: "https://via.placeholder.com/200x150?text=Lemon+Tea", price: "10k" },
+            { rule: "medium AND notTooHarmful AND nutrition", name: "Nước ép cần tây", img: "https://via.placeholder.com/200x150?text=Celery+Juice", price: "40k" },
+            { rule: "expensive AND healthy AND nutrition", name: "Nước ép hữu cơ", img: "https://via.placeholder.com/200x150?text=Organic+Juice", price: "180k" }
         ];
-
         // Hàm chọn tiêu chí
         function toggleCriteria(type, value) {
             criteria[type] = value;
@@ -215,6 +139,7 @@
             });
             updateSuggestion();
         }
+
         // Hàm hiển thị gợi ý
         function updateSuggestion() {
             const { price, health, purpose } = criteria;
@@ -245,44 +170,6 @@
                 suggestion.textContent = "Không có gợi ý phù hợp!";
             }
         }
-
-        // Hàm làm mới lựa chọn
-        function resetAll() {
-            Object.keys(criteria).forEach(key => criteria[key] = null); // Đặt lại tiêu chí
-            document.querySelectorAll(".menu button").forEach(btn => btn.classList.remove("selected"));
-            document.getElementById("suggestion").textContent = "Chọn đủ tiêu chí để nhận gợi ý...";
-            document.getElementById("results").innerHTML = ""; // Xóa kết quả
-        }
+    </script>
 </body>
 </html>
-    <style>
-        /* Hiệu ứng cho thẻ đồ uống */
-        .card {
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeUp 0.5s ease forwards;
-        }
-
-        /* Hiệu ứng fadeUp */
-        @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Phần xử lý lỗi ảnh */
-        img {
-            display: block;
-            margin: 0 auto;
-            border-radius: 8px;
-        }
-
-        img[alt=""] {
-            content: url('https://via.placeholder.com/200x150?text=No+Image');
-        }
-    </style>
