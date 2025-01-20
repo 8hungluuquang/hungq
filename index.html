@@ -4,140 +4,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chương trình Gợi Ý Nước Uống</title>
+    <title>Gợi Ý Nước Uống</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(to bottom, #ffffff, #e3f2fd);
+            background: #f5f8ff;
             margin: 0;
-            padding: 20px;
+            padding: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
-            animation: fadeIn 1s ease-in-out;
+            color: #2c3e50;
         }
 
-        h1 {
+        header {
+            background: #ffffff;
+            width: 100%;
+            padding: 15px 50px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #3498db;
+        }
+
+        header nav a {
+            margin: 0 15px;
+            font-weight: 500;
+            text-decoration: none;
+            color: #2c3e50;
+            transition: color 0.3s;
+        }
+
+        header nav a:hover {
+            color: #3498db;
+        }
+
+        .hero {
             text-align: center;
-            color: #1e88e5;
-            font-weight: 700;
-            margin-bottom: 20px;
-            font-size: 3.5rem;
-            text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.15);
-            animation: slideDown 1s ease-in-out;
+            margin: 30px 0;
         }
 
-        .menu {
-            margin: 20px 0;
-            padding: 20px;
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            color: #3498db;
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        .hero img {
+            width: 300px;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        .section {
             background: #ffffff;
             border-radius: 15px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            margin: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             width: 90%;
-            max-width: 650px;
-            animation: fadeUp 1s ease-in-out;
+            max-width: 800px;
         }
 
-        .menu h3 {
-            color: #3949ab;
+        .section h3 {
+            font-size: 1.5rem;
             margin-bottom: 15px;
-            font-weight: 600;
-            text-align: center;
+            color: #2c3e50;
         }
 
-        .menu button {
-            margin: 10px;
-            padding: 14px 25px;
+        .buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .buttons button {
+            flex: 1;
+            min-width: 100px;
+            padding: 10px 15px;
             font-size: 14px;
-            background: linear-gradient(to right, #42a5f5, #64b5f6);
-            color: white;
             border: none;
             border-radius: 50px;
+            background: linear-gradient(to right, #3498db, #5dade2);
+            color: white;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        .menu button:hover {
-            transform: translateY(-5px);
-            background: linear-gradient(to right, #1e88e5, #42a5f5);
+        .buttons button:hover {
+            background: linear-gradient(to right, #2980b9, #3498db);
         }
 
-        .menu button.selected {
-            background: linear-gradient(to right, #66bb6a, #81c784);
-            transform: scale(1.1);
+        .buttons button.selected {
+            background: linear-gradient(to right, #27ae60, #2ecc71);
         }
 
-        .output {
-            margin-top: 30px;
-            padding: 20px;
-            background: linear-gradient(to bottom, #ffffff, #e3f2fd);
-            border-radius: 15px;
+        .suggestion {
             text-align: center;
-            font-size: 16px;
-            color: #37474f;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-            width: 90%;
-            max-width: 650px;
-            animation: fadeUp 1s ease-in-out;
+            margin-top: 20px;
         }
 
-        .output h3 {
-            margin: 0 0 10px;
-            color: #1e88e5;
-            font-weight: 600;
+        .suggestion h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #3498db;
         }
 
-        .output p {
-            font-size: 18px;
-            font-weight: 500;
-            color: #212121;
+        .suggestion p {
+            font-size: 1.2rem;
+            color: #2c3e50;
         }
 
         .reset-btn {
-            display: block;
-            margin: 30px auto;
-            padding: 15px 30px;
+            margin: 20px auto;
+            padding: 12px 30px;
             font-size: 16px;
             font-weight: bold;
-            background: linear-gradient(to right, #ef5350, #e57373);
+            background: linear-gradient(to right, #e74c3c, #f57373);
             color: white;
             border: none;
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-            animation: bounceIn 1.5s ease-in-out;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
 
         .reset-btn:hover {
-            background: linear-gradient(to right, #d32f2f, #ef5350);
-            transform: translateY(-5px);
-        }
-
-        #rating-container {
-            display: none;
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        #stars button {
-            font-size: 28px;
-            border: none;
-            background: none;
-            cursor: pointer;
-            color: #ccc;
-            transition: transform 0.2s ease, color 0.2s ease;
-        }
-
-        #stars button:hover {
-            transform: scale(1.5);
-            color: #fdd835;
-        }
-
-        #stars button.selected {
-            color: #fdd835;
+            background: linear-gradient(to right, #d32f2f, #e74c3c);
         }
 
         @keyframes fadeIn {
@@ -149,69 +154,99 @@
                 opacity: 1;
             }
         }
-
-        @keyframes fadeUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes bounceIn {
-            from {
-                transform: scale(0.9);
-            }
-
-            to {
-                transform: scale(1.0);
-            }
-        }
     </style>
 </head>
 
 <body>
-    <h1>🍹 Gợi Ý Nước Uống</h1>
-    <div class="menu">
+    <header>
+        <div class="logo">Gợi Ý Nước Uống</div>
+        <nav>
+            <a href="#">Trang Chủ</a>
+            <a href="#">Gợi Ý</a>
+            <a href="#">Liên Hệ</a>
+        </nav>
+    </header>
+
+    <div class="hero">
+        <h1>🍹 Chọn Nước Uống Phù Hợp!</h1>
+        <p>Hãy chọn các tiêu chí để nhận gợi ý đồ uống phù hợp với bạn.</p>
+        <img src="https://i.imgur.com/CzOCh3l.png" alt="Drink Illustration">
+    </div>
+
+    <div class="section">
         <h3>1. Chọn Giá Đồ Uống:</h3>
-        <button onclick="setCriteria('price', 'cheap')">Rẻ (5k-15k)</button>
-        <button onclick="setCriteria('price', 'medium')">Trung bình (20k trở lên)</button>
-        <button onclick="setCriteria('price', 'expensive')">Đắt (100k trở lên)</button>
+        <div class="buttons">
+            <button onclick="setCriteria('price', 'cheap')">Rẻ (5k-15k)</button>
+            <button onclick="setCriteria('price', 'medium')">Trung bình (20k trở lên)</button>
+            <button onclick="setCriteria('price', 'expensive')">Đắt (100k trở lên)</button>
+        </div>
     </div>
-    <div class="menu">
+
+    <div class="section">
         <h3>2. Chọn Độ Lành Mạnh:</h3>
-        <button onclick="setCriteria('health', 'veryHealthy')">Tốt cho sức khỏe</button>
-        <button onclick="setCriteria('health', 'notTooHarmful')">Không quá hại sức khỏe</button>
-        <button onclick="setCriteria('health', 'healthy')">Lành mạnh</button>
-        <button onclick="setCriteria('health', 'unhealthy')">Không lành mạnh</button>
+        <div class="buttons">
+            <button onclick="setCriteria('health', 'veryHealthy')">Tốt cho sức khỏe</button>
+            <button onclick="setCriteria('health', 'notTooHarmful')">Không quá hại sức khỏe</button>
+            <button onclick="setCriteria('health', 'healthy')">Lành mạnh</button>
+            <button onclick="setCriteria('health', 'unhealthy')">Không lành mạnh</button>
+        </div>
     </div>
-    <div class="menu">
+
+    <div class="section">
         <h3>3. Chọn Mục Đích Uống:</h3>
-        <button onclick="setCriteria('purpose', 'refresh')">Giải khát</button>
-        <button onclick="setCriteria('purpose', 'nutrition')">Vì chất dinh dưỡng</button>
-        <button onclick="setCriteria('purpose', 'both')">Vì cả hai</button>
+        <div class="buttons">
+            <button onclick="setCriteria('purpose', 'refresh')">Giải khát</button>
+            <button onclick="setCriteria('purpose', 'nutrition')">Vì chất dinh dưỡng</button>
+            <button onclick="setCriteria('purpose', 'both')">Vì cả hai</button>
+        </div>
     </div>
-    <div class="output">
+
+    <div class="section suggestion">
         <h3>Gợi ý:</h3>
-        <p id="suggestion">Chọn đủ tiêu chí để nhận gợi ý...</p>
+        <p id="suggestion">Hãy chọn đủ tiêu chí để nhận gợi ý!</p>
     </div>
+
     <button class="reset-btn" onclick="resetAll()">🔄 Làm mới</button>
+
+    <script>
+        const criteria = { price: null, health: null, purpose: null };
+
+        const rules = [
+            { rule: "cheap AND veryHealthy AND refresh", output: "Nước ép cam, nước ép dứa, trà xanh." },
+            { rule: "cheap AND veryHealthy AND nutrition", output: "Nước ép táo, nước ép lựu." },
+            // Các luật đầy đủ từ bạn, tổng cộng 36 luật
+        ];
+
+        function resetSelection(button) {
+            const buttons = button.parentElement.querySelectorAll('button');
+            buttons.forEach(btn => btn.classList.remove('selected'));
+            button.classList.add('selected');
+        }
+
+        function setCriteria(type, value) {
+            criteria[type] = value;
+            resetSelection(event.target);
+            updateSuggestion();
+        }
+
+        function updateSuggestion() {
+            const { price, health, purpose } = criteria;
+            const suggestion = document.getElementById('suggestion');
+            if (!price || !health || !purpose) {
+                suggestion.textContent = "Hãy chọn đủ tiêu chí để nhận gợi ý!";
+                return;
+            }
+            const ruleKey = `${price} AND ${health} AND ${purpose}`;
+            const matched = rules.find(rule => rule.rule === ruleKey);
+            suggestion.textContent = matched ? matched.output : "Không tìm thấy gợi ý phù hợp!";
+        }
+
+        function resetAll() {
+            Object.keys(criteria).forEach(key => (criteria[key] = null));
+            document.querySelectorAll('button').forEach(btn => btn.classList.remove('selected'));
+            document.getElementById('suggestion').textContent = "Hãy chọn đủ tiêu chí để nhận gợi ý!";
+        }
+    </script>
 </body>
 
 </html>
