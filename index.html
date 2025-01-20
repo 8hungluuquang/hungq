@@ -7,7 +7,6 @@
     <title>Gợi Ý Nước Uống</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Body và hình nền */
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
@@ -21,69 +20,6 @@
             overflow: hidden;
         }
 
-        /* Hiệu ứng bong bóng */
-        .bubbles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            overflow: hidden;
-        }
-
-        .bubble {
-            position: absolute;
-            bottom: -150px;
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            animation: rise 10s infinite ease-in-out;
-        }
-
-        .bubble:nth-child(2) {
-            left: 25%;
-            width: 80px;
-            height: 80px;
-            animation-duration: 12s;
-        }
-
-        .bubble:nth-child(3) {
-            left: 50%;
-            width: 40px;
-            height: 40px;
-            animation-duration: 8s;
-        }
-
-        .bubble:nth-child(4) {
-            left: 75%;
-            width: 70px;
-            height: 70px;
-            animation-duration: 11s;
-        }
-
-        .bubble:nth-child(5) {
-            left: 90%;
-            width: 100px;
-            height: 100px;
-            animation-duration: 15s;
-        }
-
-        @keyframes rise {
-            0% {
-                transform: translateY(0);
-                opacity: 0.8;
-            }
-            50% {
-                opacity: 0.4;
-            }
-            100% {
-                transform: translateY(-100vh);
-                opacity: 0;
-            }
-        }
-
         header {
             background: rgba(255, 255, 255, 0.8);
             width: 100%;
@@ -92,7 +28,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            z-index: 1;
         }
 
         header .logo img {
@@ -120,7 +55,6 @@
             background: rgba(255, 255, 255, 0.85);
             border-radius: 15px;
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-            z-index: 1;
         }
 
         .hero h1 {
@@ -142,7 +76,6 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             width: 90%;
             max-width: 800px;
-            z-index: 1;
         }
 
         .section h3 {
@@ -217,14 +150,6 @@
 </head>
 
 <body>
-    <div class="bubbles">
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-        <div class="bubble"></div>
-    </div>
-
     <header>
         <div class="logo">
             <img src="https://photo.znews.vn/w960/Uploaded/mdf_eioxrd/2021_07_06/2.jpg" alt="Drink Logo">
@@ -275,6 +200,79 @@
     </div>
 
     <button class="reset-btn" onclick="resetAll()">🔄 Làm mới</button>
+
+    <script>
+        const criteria = { price: null, health: null, purpose: null };
+
+        const rules = [
+            { rule: "cheap AND veryHealthy AND refresh", output: "Nước ngọt không có ga: Nước ép cam, Nước ép dứa, Trà xanh." },
+            { rule: "cheap AND veryHealthy AND nutrition", output: "Nước ép trái cây giá rẻ: Nước ép táo, Nước ép lựu." },
+            { rule: "cheap AND veryHealthy AND both", output: "Trà thảo mộc: Trà gừng, Trà hoa cúc." },
+            { rule: "cheap AND notTooHarmful AND refresh", output: "Nước ngọt có ga: Coca-Cola, Pepsi, Sprite." },
+            { rule: "cheap AND notTooHarmful AND nutrition", output: "Loại nước chưa tồn tại!" },
+            { rule: "cheap AND notTooHarmful AND both", output: "Loại nước chưa tồn tại!" },
+            { rule: "cheap AND healthy AND refresh", output: "Nước lọc giá rẻ: Nước tinh khiết, Nước khoáng đóng chai." },
+            { rule: "cheap AND healthy AND nutrition", output: "Loại nước chưa tồn tại!" },
+            { rule: "cheap AND healthy AND both", output: "Loại nước chưa tồn tại!" },
+            { rule: "cheap AND unhealthy AND refresh", output: "Nước ngọt giá rẻ: Soda vị đặc biệt, Nước ngọt đóng chai." },
+            { rule: "cheap AND unhealthy AND nutrition", output: "Loại nước chưa tồn tại!" },
+            { rule: "cheap AND unhealthy AND both", output: "Loại nước chưa tồn tại!" },
+            { rule: "medium AND veryHealthy AND refresh", output: "Nước dừa tươi, Nước ép cà rốt." },
+            { rule: "medium AND veryHealthy AND nutrition", output: "Nước ép rau củ: Nước ép củ cải đỏ, Nước ép dưa leo." },
+            { rule: "medium AND veryHealthy AND both", output: "Nước tốt cho sức khỏe: Trà hoa cúc, Kombucha." },
+            { rule: "medium AND notTooHarmful AND refresh", output: "Trà sữa ít đường: Trà sữa matcha, Trà sữa trân châu ít ngọt." },
+            { rule: "medium AND notTooHarmful AND nutrition", output: "Nước tăng lực ít đường: Red Bull không đường, Monster Ultra." },
+            { rule: "medium AND notTooHarmful AND both", output: "Loại nước chưa tồn tại!" },
+            { rule: "medium AND healthy AND refresh", output: "Kombucha: Kombucha gừng, Kombucha dứa." },
+            { rule: "medium AND healthy AND nutrition", output: "Sữa hạt: Sữa óc chó, Sữa hạnh nhân." },
+            { rule: "medium AND healthy AND both", output: "Sữa chua uống: Sữa chua uống vị dâu, Sữa chua uống vị việt quất." },
+            { rule: "medium AND unhealthy AND refresh", output: "Loại nước chưa tồn tại!" },
+            { rule: "medium AND unhealthy AND nutrition", output: "Loại nước chưa tồn tại!" },
+            { rule: "medium AND unhealthy AND both", output: "Loại nước chưa tồn tại!" },
+            { rule: "expensive AND veryHealthy AND refresh", output: "Nước khoáng cao cấp: Evian, Perrier." },
+            { rule: "expensive AND veryHealthy AND nutrition", output: "Nước ép rau củ cao cấp: Nước ép cần tây, Nước ép cà rốt." },
+            { rule: "expensive AND veryHealthy AND both", output: "Nước detox: Detox chanh, Detox bạc hà." },
+            { rule: "expensive AND notTooHarmful AND refresh", output: "Nước ngọt cao cấp: Soda vị cherry, Soda vanilla." },
+            { rule: "expensive AND notTooHarmful AND nutrition", output: "Loại nước chưa tồn tại!" },
+            { rule: "expensive AND notTooHarmful AND both", output: "Loại nước chưa tồn tại!" },
+            { rule: "expensive AND healthy AND refresh", output: "Nước khoáng nhập khẩu: San Pellegrino, Perrier." },
+            { rule: "expensive AND healthy AND nutrition", output: "Loại nước chưa tồn tại!" },
+            { rule: "expensive AND healthy AND both", output: "Loại nước chưa tồn tại!" },
+            { rule: "expensive AND unhealthy AND refresh", output: "Loại nước chưa tồn tại!" },
+            { rule: "expensive AND unhealthy AND nutrition", output: "Loại nước chưa tồn tại!" },
+            { rule: "expensive AND unhealthy AND both", output: "Rượu vang: Rượu vang đỏ, Rượu vang trắng." },
+        ];
+
+        function resetSelection(button) {
+            const buttons = button.parentElement.querySelectorAll('button');
+            buttons.forEach(btn => btn.classList.remove('selected'));
+            button.classList.add('selected');
+        }
+
+        function setCriteria(type, value) {
+            criteria[type] = value;
+            resetSelection(event.target);
+            updateSuggestion();
+        }
+
+        function updateSuggestion() {
+            const { price, health, purpose } = criteria;
+            const suggestion = document.getElementById('suggestion');
+            if (!price || !health || !purpose) {
+                suggestion.textContent = "Hãy chọn đủ tiêu chí để nhận gợi ý!";
+                return;
+            }
+            const ruleKey = `${price} AND ${health} AND ${purpose}`;
+            const matched = rules.find(rule => rule.rule === ruleKey);
+            suggestion.textContent = matched ? matched.output : "Không tìm thấy gợi ý phù hợp!";
+        }
+
+        function resetAll() {
+            Object.keys(criteria).forEach(key => (criteria[key] = null));
+            document.querySelectorAll('button').forEach(btn => btn.classList.remove('selected'));
+            document.getElementById('suggestion').textContent = "Hãy chọn đủ tiêu chí để nhận gợi ý!";
+        }
+    </script>
 </body>
 
 </html>
