@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gợi Ý Đồ Uống - Nâng Cấp</title>
+    <title>Gợi Ý Đồ Uống - Mở Rộng</title>
     <style>
-        /* Toàn bộ trang */
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 20px;
-            background-color: #f9f9f9;
+            background-color: #f7f7f7;
             color: #333;
         }
 
@@ -18,57 +17,50 @@
             text-align: center;
             color: #dd183b;
             font-size: 2.5rem;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
 
-        /* Menu tiêu chí */
         .menu {
             margin-bottom: 20px;
             padding: 10px;
-            border: 1px solid #ccc;
+            background: #fff;
             border-radius: 8px;
-            background-color: #fff;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .menu h3 {
-            margin-bottom: 10px;
             color: #555;
+            margin-bottom: 10px;
         }
 
         .menu button {
             margin-right: 10px;
-            margin-bottom: 10px;
             padding: 10px 15px;
+            font-size: 14px;
             background-color: #007bff;
-            color: #fff;
+            color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .menu button:hover {
-            background-color: #0056b3;
+            transition: background-color 0.3s;
         }
 
         .menu button.selected {
             background-color: #28a745;
         }
 
-        /* Phần hiển thị gợi ý */
         .output {
-            text-align: center;
             margin-top: 30px;
+            text-align: center;
         }
 
         #suggestion {
             font-size: 1.2rem;
             font-weight: bold;
-            margin-bottom: 15px;
+            color: #007bff;
+            margin-bottom: 20px;
         }
 
-        /* Card đồ uống */
         .card-container {
             display: flex;
             flex-wrap: wrap;
@@ -78,97 +70,69 @@
 
         .card {
             width: 200px;
-            background-color: #fff;
+            background: white;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             text-align: center;
-            overflow: hidden;
+            padding: 15px;
         }
 
         .card img {
             width: 100%;
             height: 150px;
             object-fit: cover;
+            border-radius: 5px;
         }
 
         .card h4 {
             margin: 10px 0;
             font-size: 16px;
-            color: #333;
         }
 
         .card p {
-            margin: 0;
-            color: #777;
             font-size: 14px;
+            color: #555;
         }
 
-        /* Đánh giá */
-        #rating-container {
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        #stars button {
-            font-size: 25px;
-            color: gray;
-            cursor: pointer;
-            border: none;
-            background: none;
-            transition: color 0.3s ease;
-        }
-
-        #stars button:hover,
-        #stars button.selected {
-            color: gold;
-        }
-
-        /* Phản hồi */
-        textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            margin-top: 10px;
-        }
-
-        button.reset-btn {
+        .reset-btn {
             display: block;
-            margin: 30px auto 0;
+            margin: 30px auto;
             padding: 10px 20px;
-            color: #fff;
-            background-color: #dc3545;
+            background: #dc3545;
+            color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
         }
 
-        button.reset-btn:hover {
-            background-color: #b02a37;
+        .reset-btn:hover {
+            background: #b02a37;
         }
     </style>
 </head>
 <body>
-    <h1>Chương trình Gợi Ý Đồ Uống</h1>
+    <h1>Gợi Ý Đồ Uống</h1>
 
     <!-- Tiêu chí -->
     <div class="menu">
         <h3>1. Chọn Giá Đồ Uống:</h3>
-        <button onclick="setCriteria('price', 'cheap')">Rẻ (5k-15k)</button>
-        <button onclick="setCriteria('price', 'medium')">Trung bình (20k-100k)</button>
-        <button onclick="setCriteria('price', 'expensive')">Đắt (100k+)</button>
+        <button onclick="toggleCriteria('price', 'cheap')">Rẻ (5k-15k)</button>
+        <button onclick="toggleCriteria('price', 'medium')">Trung bình (20k-100k)</button>
+        <button onclick="toggleCriteria('price', 'expensive')">Đắt (100k+)</button>
     </div>
+
     <div class="menu">
         <h3>2. Chọn Độ Lành Mạnh:</h3>
-        <button onclick="setCriteria('health', 'veryHealthy')">Tốt cho sức khỏe</button>
-        <button onclick="setCriteria('health', 'notTooHarmful')">Không quá hại</button>
-        <button onclick="setCriteria('health', 'unhealthy')">Không lành mạnh</button>
+        <button onclick="toggleCriteria('health', 'veryHealthy')">Tốt cho sức khỏe</button>
+        <button onclick="toggleCriteria('health', 'healthy')">Lành mạnh</button>
+        <button onclick="toggleCriteria('health', 'unhealthy')">Không lành mạnh</button>
     </div>
+
     <div class="menu">
         <h3>3. Chọn Mục Đích Uống:</h3>
-        <button onclick="setCriteria('purpose', 'refresh')">Giải khát</button>
-        <button onclick="setCriteria('purpose', 'nutrition')">Dinh dưỡng</button>
-        <button onclick="setCriteria('purpose', 'both')">Cả hai</button>
+        <button onclick="toggleCriteria('purpose', 'refresh')">Giải khát</button>
+        <button onclick="toggleCriteria('purpose', 'nutrition')">Dinh dưỡng</button>
+        <button onclick="toggleCriteria('purpose', 'both')">Cả hai</button>
     </div>
 
     <!-- Gợi ý -->
@@ -178,47 +142,55 @@
         <div id="results" class="card-container"></div>
     </div>
 
-    <!-- Đánh giá -->
-    <div id="rating-container">
-        <h3>Đánh giá:</h3>
-        <div id="stars">
-            <button onclick="rateSuggestion(1)">☆</button>
-            <button onclick="rateSuggestion(2)">☆</button>
-            <button onclick="rateSuggestion(3)">☆</button>
-            <button onclick="rateSuggestion(4)">☆</button>
-            <button onclick="rateSuggestion(5)">☆</button>
-        </div>
-        <textarea id="feedback" rows="4" placeholder="Nhập phản hồi của bạn..."></textarea>
-        <button onclick="submitFeedback()">Gửi phản hồi</button>
-    </div>
-
     <button class="reset-btn" onclick="resetAll()">Làm mới lựa chọn</button>
 
     <script>
         // Tiêu chí người dùng chọn
         const criteria = { price: null, health: null, purpose: null };
 
-        // Luật gợi ý đồ uống
+        // Danh sách luật gợi ý
         const rules = [
             { rule: "cheap AND veryHealthy AND refresh", name: "Nước ép cam", img: "orange_juice.jpg", price: "10k" },
-            { rule: "medium AND veryHealthy AND nutrition", name: "Sữa hạt", img: "nut_milk.jpg", price: "40k" },
-            { rule: "expensive AND unhealthy AND both", name: "Cocktail cao cấp", img: "cocktail.jpg", price: "150k" },
-            // ... (thêm 20 luật khác)
+            { rule: "cheap AND healthy AND nutrition", name: "Nước lọc tinh khiết", img: "pure_water.jpg", price: "5k" },
+            { rule: "cheap AND unhealthy AND refresh", name: "Nước ngọt", img: "soft_drink.jpg", price: "12k" },
+            { rule: "medium AND veryHealthy AND refresh", name: "Nước dừa", img: "coconut_water.jpg", price: "25k" },
+            { rule: "medium AND healthy AND both", name: "Trà sữa ít đường", img: "milk_tea.jpg", price: "30k" },
+            { rule: "medium AND unhealthy AND nutrition", name: "Trà sữa nhiều topping", img: "topping_milk_tea.jpg", price: "40k" },
+            { rule: "expensive AND veryHealthy AND refresh", name: "Nước detox cao cấp", img: "detox_water.jpg", price: "120k" },
+            { rule: "expensive AND healthy AND both", name: "Nước ép hoa quả nhập khẩu", img: "imported_juice.jpg", price: "150k" },
+            { rule: "expensive AND unhealthy AND refresh", name: "Cocktail", img: "cocktail.jpg", price: "200k" },
+            { rule: "cheap AND veryHealthy AND nutrition", name: "Trà xanh", img: "green_tea.jpg", price: "15k" },
+            { rule: "medium AND healthy AND nutrition", name: "Sữa hạt", img: "nut_milk.jpg", price: "35k" },
+            { rule: "expensive AND veryHealthy AND nutrition", name: "Smoothie cao cấp", img: "premium_smoothie.jpg", price: "200k" },
+            { rule: "cheap AND unhealthy AND nutrition", name: "Nước ngọt tăng lực", img: "energy_drink.jpg", price: "15k" },
+            { rule: "medium AND veryHealthy AND both", name: "Trà trái cây", img: "fruit_tea.jpg", price: "45k" },
+            { rule: "expensive AND notTooHarmful AND refresh", name: "Nước khoáng nhập khẩu", img: "imported_water.jpg", price: "100k" },
+            { rule: "medium AND notTooHarmful AND refresh", name: "Trà hoa cúc", img: "chamomile_tea.jpg", price: "30k" },
+            { rule: "expensive AND unhealthy AND nutrition", name: "Cocktail sữa", img: "milk_cocktail.jpg", price: "250k" },
+            { rule: "cheap AND notTooHarmful AND refresh", name: "Trà chanh", img: "lemon_tea.jpg", price: "10k" },
+            { rule: "medium AND notTooHarmful AND nutrition", name: "Nước ép cần tây", img: "celery_juice.jpg", price: "40k" },
+            { rule: "expensive AND healthy AND nutrition", name: "Nước ép hữu cơ", img: "organic_juice.jpg", price: "180k" }
         ];
 
-        // Cập nhật tiêu chí
-        function setCriteria(type, value) {
+        // Hàm chuyển đổi tiêu chí
+        function toggleCriteria(type, value) {
             criteria[type] = value;
-            document.querySelectorAll(`.menu button`).forEach(btn => btn.classList.remove('selected'));
-            event.target.classList.add('selected');
+            const buttons = document.querySelectorAll(`.menu button`);
+            buttons.forEach(btn => {
+                if (btn.textContent.includes(value)) {
+                    btn.classList.add("selected");
+                } else {
+                    btn.classList.remove("selected");
+                }
+            });
             updateSuggestion();
         }
 
         // Hiển thị gợi ý
         function updateSuggestion() {
             const { price, health, purpose } = criteria;
-            const results = document.getElementById('results');
-            const suggestion = document.getElementById('suggestion');
+            const results = document.getElementById("results");
+            const suggestion = document.getElementById("suggestion");
             results.innerHTML = "";
 
             if (!price || !health || !purpose) {
@@ -228,7 +200,7 @@
 
             const matched = rules.filter(rule => rule.rule === `${price} AND ${health} AND ${purpose}`);
             if (matched.length) {
-                suggestion.textContent = "Đây là gợi ý của bạn:";
+                suggestion.textContent = "Gợi ý của bạn:";
                 matched.forEach(drink => {
                     results.innerHTML += `
                         <div class="card">
@@ -243,25 +215,12 @@
             }
         }
 
-        // Đánh giá
-        function rateSuggestion(stars) {
-            document.querySelectorAll('#stars button').forEach((btn, idx) => {
-                btn.textContent = idx < stars ? '⭐' : '☆';
-                btn.classList.toggle('selected', idx < stars);
-            });
-        }
-
-        function submitFeedback() {
-            alert("Cảm ơn bạn đã phản hồi!");
-        }
-
         // Làm mới
         function resetAll() {
             Object.keys(criteria).forEach(key => criteria[key] = null);
-            document.querySelectorAll('button').forEach(btn => btn.classList.remove('selected'));
-            document.getElementById('suggestion').textContent = "Chọn đủ tiêu chí để nhận gợi ý...";
-            document.getElementById('results').innerHTML = "";
-            document.querySelectorAll('#stars button').forEach(btn => btn.textContent = '☆');
+            document.querySelectorAll(".menu button").forEach(btn => btn.classList.remove("selected"));
+            document.getElementById("suggestion").textContent = "Chọn đủ tiêu chí để nhận gợi ý...";
+            document.getElementById("results").innerHTML = "";
         }
     </script>
 </body>
