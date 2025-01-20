@@ -250,44 +250,31 @@
                 btn.textContent = index < stars ? '⭐' : '☆';
                 btn.classList.toggle('selected', index < stars);
             });
-
-            try {
-                const response = await fetch(scriptURL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ stars }),
-                });
-
-                if (response.ok) {
-                    alert("Đánh giá của bạn đã được lưu!");
-                } else {
-                    alert("Không thể lưu đánh giá. Vui lòng thử lại.");
-                }
-            } catch (error) {
-                alert("Có lỗi xảy ra khi lưu đánh giá!");
-            }
         }
 
-        async function submitFeedback() {
-            const feedback = document.getElementById('feedback').value.trim();
-            if (!feedback) {
-                alert("Vui lòng nhập phản hồi trước khi gửi!");
-                return;
-            }
-            try {
-                const response = await fetch(scriptURL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ feedback }),
-                });
+        function resetAll() {
+            // Đặt lại tất cả tiêu chí về null
+            Object.keys(criteria).forEach(key => criteria[key] = null);
 
-                if (response.ok) {
-                    alert("Phản hồi đã được gửi!");
-                    document.getElementById('feedback').value = "";
-                }
-            } catch (error) {
-                alert("Gửi phản hồi thất bại!");
-            }
+            // Xóa trạng thái 'selected' của các nút
+            document.querySelectorAll('.menu button').forEach(btn => btn.classList.remove('selected'));
+
+            // Đặt lại văn bản gợi ý
+            const suggestion = document.getElementById('suggestion');
+            suggestion.textContent = "Chọn đủ tiêu chí để nhận gợi ý...";
+
+            // Ẩn phần đánh giá và phản hồi
+            document.getElementById('rating-container').style.display = "none";
+            document.getElementById('feedback-container').style.display = "none";
+            document.getElementById('thank-you').style.display = "none";
+
+            // Đặt lại các nút sao về trạng thái ban đầu
+            document.querySelectorAll('#stars button').forEach(btn => {
+                btn.textContent = "☆";
+                btn.classList.remove('selected');
+            });
+
+            hasRated = false; // Đặt lại trạng thái đánh giá
         }
     </script>
 </body>
