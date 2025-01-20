@@ -188,6 +188,70 @@
                 transform: scale(1);
             }
         }
+        .rating-container {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    .rating-container h3 {
+        color: #1abc9c;
+    }
+
+    .stars button {
+        font-size: 2rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #ccc;
+        transition: transform 0.2s, color 0.3s;
+    }
+
+    .stars button:hover {
+        transform: scale(1.2);
+        color: #f1c40f;
+    }
+
+    .stars button.selected {
+        color: #f1c40f;
+    }
+
+    .feedback-container {
+        display: none;
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    .feedback-container textarea {
+        width: 100%;
+        max-width: 500px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        resize: none;
+    }
+
+    .feedback-container button {
+        margin-top: 10px;
+        padding: 10px 20px;
+        background: #1abc9c;
+        border: none;
+        border-radius: 5px;
+        color: #fff;
+        font-size: 1rem;
+        cursor: pointer;
+    }
+
+    .feedback-container button:hover {
+        background: #16a085;
+    }
+
+    .thank-you {
+        color: #1abc9c;
+        font-weight: bold;
+        margin-top: 20px;
+        display: none;
+    }
     </style>
 </head>
 
@@ -235,6 +299,28 @@
     </div>
 
     <div class="section suggestion">
+        <div class="section suggestion">
+    <h3>Gợi ý:</h3>
+    <p id="suggestion">Hãy chọn đủ tiêu chí để nhận gợi ý!</p>
+</div>
+
+<!-- Thêm phần đánh giá ở đây -->
+<div class="rating-container">
+    <h3>Đánh giá gợi ý:</h3>
+    <div class="stars" id="stars">
+        <button onclick="rateSuggestion(1)">☆</button>
+        <button onclick="rateSuggestion(2)">☆</button>
+        <button onclick="rateSuggestion(3)">☆</button>
+        <button onclick="rateSuggestion(4)">☆</button>
+        <button onclick="rateSuggestion(5)">☆</button>
+    </div>
+    <div class="feedback-container" id="feedback-container">
+        <textarea id="feedback" rows="4" placeholder="Hãy nhập phản hồi của bạn..."></textarea>
+        <button onclick="submitFeedback()">Gửi phản hồi</button>
+    </div>
+    <p class="thank-you" id="thank-you">Cảm ơn vì sự đánh giá cao của bạn! 😊</p>
+</div>
+
         <h3>Gợi ý:</h3>
         <p id="suggestion">Hãy chọn đủ tiêu chí để nhận gợi ý!</p>
     </div>
@@ -312,6 +398,40 @@
             document.querySelectorAll('button').forEach(btn => btn.classList.remove('selected'));
             document.getElementById('suggestion').textContent = "Hãy chọn đủ tiêu chí để nhận gợi ý!";
         }
+        let hasRated = false;
+
+    function rateSuggestion(stars) {
+        const starButtons = document.querySelectorAll('#stars button');
+        starButtons.forEach((btn, index) => {
+            btn.textContent = index < stars ? '⭐' : '☆';
+            btn.classList.toggle('selected', index < stars);
+        });
+
+        hasRated = true;
+
+        const feedbackContainer = document.getElementById('feedback-container');
+        const thankYouMessage = document.getElementById('thank-you');
+
+        if (stars === 5) {
+            feedbackContainer.style.display = 'none';
+            thankYouMessage.style.display = 'block';
+        } else {
+            feedbackContainer.style.display = 'block';
+            thankYouMessage.style.display = 'none';
+        }
+    }
+
+    function submitFeedback() {
+        const feedbackText = document.getElementById('feedback').value;
+        if (feedbackText.trim() === '') {
+            alert('Vui lòng nhập phản hồi của bạn!');
+            return;
+        }
+
+        alert('Cảm ơn bạn đã phản hồi!');
+        document.getElementById('feedback').value = '';
+        document.getElementById('feedback-container').style.display = 'none';
+    }
     </script>
 </body>
 
