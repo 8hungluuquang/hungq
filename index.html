@@ -420,18 +420,26 @@
             thankYouMessage.style.display = 'none';
         }
     }
+setTimeout(() => {
+        ratingContainer.style.display = 'none';
+        thankYouMessage.style.display = 'none';
+    }, 2000);
+}
 
-    function submitFeedback() {
-        const feedbackText = document.getElementById('feedback').value;
-        if (feedbackText.trim() === '') {
-            alert('Vui lòng nhập phản hồi của bạn!');
-            return;
-        }
-
-        alert('Cảm ơn bạn đã phản hồi!');
-        document.getElementById('feedback').value = '';
-        document.getElementById('feedback-container').style.display = 'none';
+function submitFeedback() {
+    const feedbackText = document.getElementById('feedback').value;
+    if (feedbackText.trim() === '') {
+        alert('Vui lòng nhập phản hồi của bạn!');
+        return;
     }
+
+    alert('Cảm ơn bạn đã phản hồi!');
+    document.getElementById('feedback').value = '';
+    document.getElementById('feedback-container').style.display = 'none';
+
+    // Ẩn phần đánh giá sau khi gửi phản hồi
+    document.querySelector('.rating-container').style.display = 'none';
+}
     </script>
 </body>
 
