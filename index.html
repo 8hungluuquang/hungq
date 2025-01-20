@@ -10,7 +10,7 @@
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 20px;
-            background-color: #f7f7f7;
+            background-color: #f9f9f9;
             color: #333;
         }
 
@@ -24,10 +24,11 @@
         /* Khu vực menu chọn tiêu chí */
         .menu {
             margin-bottom: 20px;
-            padding: 10px;
-            background-color: white;
+            padding: 15px;
+            background: #fff;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
         }
 
         .menu h3 {
@@ -38,18 +39,20 @@
 
         .menu button {
             margin-right: 10px;
+            margin-bottom: 10px;
             padding: 10px 15px;
+            font-size: 14px;
             background-color: #007bff;
             color: white;
             border: none;
             border-radius: 5px;
-            font-size: 14px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, transform 0.2s;
         }
 
         .menu button.selected {
             background-color: #28a745;
+            transform: scale(1.1);
         }
 
         .menu button:hover {
@@ -67,8 +70,56 @@
             font-weight: bold;
             color: #007bff;
             margin-bottom: 20px;
+            animation: fadeIn 0.5s ease;
         }
 
+        /* Hiệu ứng fadeIn */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Chương trình Gợi Ý Đồ Uống</h1>
+
+    <!-- Tiêu chí -->
+    <div class="menu">
+        <h3>1. Chọn Giá Đồ Uống:</h3>
+        <button onclick="toggleCriteria('price', 'cheap')">Rẻ (5k-15k)</button>
+        <button onclick="toggleCriteria('price', 'medium')">Trung bình (20k-100k)</button>
+        <button onclick="toggleCriteria('price', 'expensive')">Đắt (100k+)</button>
+    </div>
+
+    <div class="menu">
+        <h3>2. Chọn Độ Lành Mạnh:</h3>
+        <button onclick="toggleCriteria('health', 'veryHealthy')">Tốt cho sức khỏe</button>
+        <button onclick="toggleCriteria('health', 'healthy')">Lành mạnh</button>
+        <button onclick="toggleCriteria('health', 'unhealthy')">Không lành mạnh</button>
+    </div>
+    <div class="menu">
+        <h3>3. Chọn Mục Đích Uống:</h3>
+        <button onclick="toggleCriteria('purpose', 'refresh')">Giải khát</button>
+        <button onclick="toggleCriteria('purpose', 'nutrition')">Dinh dưỡng</button>
+        <button onclick="toggleCriteria('purpose', 'both')">Cả hai</button>
+    </div>
+
+    <!-- Kết quả gợi ý -->
+    <div class="output">
+        <h3>Gợi ý:</h3>
+        <div id="suggestion">Chọn đủ tiêu chí để nhận gợi ý...</div>
+        <div id="results" class="card-container"></div>
+    </div>
+
+    <!-- Nút làm mới -->
+    <button class="reset-btn" onclick="resetAll()">Làm mới lựa chọn</button>
+
+    <style>
+        /* Khu vực thẻ gợi ý */
         .card-container {
             display: flex;
             flex-wrap: wrap;
@@ -83,6 +134,12 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             text-align: center;
             padding: 15px;
+            transform: scale(0.95);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .card:hover {
+            transform: scale(1);
         }
 
         .card img {
@@ -104,7 +161,8 @@
 
         /* Nút làm mới */
         .reset-btn {
-            margin-top: 30px;
+            display: block;
+            margin-top: 20px;
             padding: 10px 20px;
             background: #dc3545;
             color: white;
@@ -112,48 +170,13 @@
             border-radius: 5px;
             font-size: 16px;
             cursor: pointer;
+            transition: background-color 0.3s;
         }
 
         .reset-btn:hover {
             background: #b02a37;
         }
     </style>
-</head>
-<body>
-    <h1>Chương trình Gợi Ý Đồ Uống</h1>
-
-    <!-- Tiêu chí -->
-    <div class="menu">
-        <h3>1. Chọn Giá Đồ Uống:</h3>
-        <button onclick="toggleCriteria('price', 'cheap')">Rẻ (5k-15k)</button>
-        <button onclick="toggleCriteria('price', 'medium')">Trung bình (20k-100k)</button>
-        <button onclick="toggleCriteria('price', 'expensive')">Đắt (100k+)</button>
-    </div>
-
-    <div class="menu">
-        <h3>2. Chọn Độ Lành Mạnh:</h3>
-        <button onclick="toggleCriteria('health', 'veryHealthy')">Tốt cho sức khỏe</button>
-        <button onclick="toggleCriteria('health', 'healthy')">Lành mạnh</button>
-        <button onclick="toggleCriteria('health', 'unhealthy')">Không lành mạnh</button>
-    </div>
-
-    <div class="menu">
-        <h3>3. Chọn Mục Đích Uống:</h3>
-        <button onclick="toggleCriteria('purpose', 'refresh')">Giải khát</button>
-        <button onclick="toggleCriteria('purpose', 'nutrition')">Dinh dưỡng</button>
-        <button onclick="toggleCriteria('purpose', 'both')">Cả hai</button>
-    </div>
-
-    <!-- Kết quả gợi ý -->
-    <div class="output">
-        <h3>Gợi ý:</h3>
-        <div id="suggestion">Chọn đủ tiêu chí để nhận gợi ý...</div>
-        <div id="results" class="card-container"></div>
-    </div>
-
-    <!-- Nút làm mới -->
-    <button class="reset-btn" onclick="resetAll()">Làm mới lựa chọn</button>
-
     <script>
         // Tiêu chí người dùng chọn
         const criteria = { price: null, health: null, purpose: null };
@@ -182,7 +205,7 @@
             { rule: "expensive AND healthy AND nutrition", name: "Nước ép hữu cơ", img: "organic_juice.jpg", price: "180k" }
         ];
 
-        // Chọn tiêu chí
+        // Hàm chọn tiêu chí
         function toggleCriteria(type, value) {
             criteria[type] = value;
             const buttons = document.querySelectorAll(`.menu button`);
@@ -192,19 +215,20 @@
             });
             updateSuggestion();
         }
-
-        // Hiển thị gợi ý
+        // Hàm hiển thị gợi ý
         function updateSuggestion() {
             const { price, health, purpose } = criteria;
             const results = document.getElementById("results");
             const suggestion = document.getElementById("suggestion");
-            results.innerHTML = "";
+            results.innerHTML = ""; // Xóa gợi ý trước đó
 
+            // Kiểm tra nếu thiếu tiêu chí
             if (!price || !health || !purpose) {
                 suggestion.textContent = "Hãy chọn đủ các tiêu chí để nhận gợi ý!";
                 return;
             }
 
+            // Lọc gợi ý phù hợp
             const matched = rules.filter(rule => rule.rule === `${price} AND ${health} AND ${purpose}`);
             if (matched.length) {
                 suggestion.textContent = "Gợi ý của bạn:";
@@ -222,13 +246,43 @@
             }
         }
 
-        // Làm mới
+        // Hàm làm mới lựa chọn
         function resetAll() {
-            Object.keys(criteria).forEach(key => criteria[key] = null);
+            Object.keys(criteria).forEach(key => criteria[key] = null); // Đặt lại tiêu chí
             document.querySelectorAll(".menu button").forEach(btn => btn.classList.remove("selected"));
             document.getElementById("suggestion").textContent = "Chọn đủ tiêu chí để nhận gợi ý...";
-            document.getElementById("results").innerHTML = "";
+            document.getElementById("results").innerHTML = ""; // Xóa kết quả
         }
-    </script>
 </body>
 </html>
+    <style>
+        /* Hiệu ứng cho thẻ đồ uống */
+        .card {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.5s ease forwards;
+        }
+
+        /* Hiệu ứng fadeUp */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Phần xử lý lỗi ảnh */
+        img {
+            display: block;
+            margin: 0 auto;
+            border-radius: 8px;
+        }
+
+        img[alt=""] {
+            content: url('https://via.placeholder.com/200x150?text=No+Image');
+        }
+    </style>
