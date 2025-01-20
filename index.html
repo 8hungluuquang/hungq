@@ -179,31 +179,6 @@
         const criteria = { price: null, health: null, purpose: null };
         let hasRated = false;
 
-        // URL Google Apps Script
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbxNB2At0Fv6Qi7rWYYpK5mw3Mgq9f25OMuYvZNOyTF0jmqC0O7EVx0ubHqXk_Af8qSE/exec';
-
-        async function submitFeedback() {
-            const feedback = document.getElementById('feedback').value.trim();
-            if (!feedback) {
-                alert("Vui lòng nhập phản hồi trước khi gửi!");
-                return;
-            }
-            try {
-                const response = await fetch(scriptURL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ feedback }),
-                });
-
-                if (response.ok) {
-                    alert("Phản hồi đã được gửi!");
-                    document.getElementById('feedback').value = "";
-                }
-            } catch (error) {
-                alert("Gửi phản hồi thất bại!");
-            }
-        }
-
         function resetSelection(button) {
             const buttons = button.parentElement.querySelectorAll('button');
             buttons.forEach(btn => btn.classList.remove('selected'));
@@ -224,7 +199,7 @@
                 document.getElementById('rating-container').style.display = "none";
                 return;
             }
-             const rules = [
+            const rules = [
                 { rule: "cheap AND veryHealthy AND refresh", output: "Nước ngọt không có ga: Nước ép cam, Nước ép dứa, Trà xanh." },
                 { rule: "cheap AND veryHealthy AND nutrition", output: "Nước ép trái cây giá rẻ: Nước ép táo, Nước ép lựu." },
                 { rule: "cheap AND veryHealthy AND both", output: "Trà thảo mộc: Trà gừng, Trà hoa cúc." },
@@ -267,8 +242,52 @@
             document.getElementById('rating-container').style.display = "block";
         }
 
-        function rateSuggestion(stars) {
+        async function rateSuggestion(stars) {
             hasRated = true;
+
+            const starButtons = document.querySelectorAll('#stars button');
+            starButtons.forEach((btn, index) => {
+                btn.textContent = index < stars ? '⭐' : '☆';
+                btn.classList.toggle('selected', index < stars);
+            });
+
+            try {
+                const response = await fetch(scriptURL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ stars }),
+                });
+
+                if (response.ok) {
+                    alert("Đánh giá của bạn đã được lưu!");
+                } else {
+                    alert("Không thể lưu đánh giá. Vui lòng thử lại.");
+                }
+            } catch (error) {
+                alert("Có lỗi xảy ra khi lưu đánh giá!");
+            }
+        }
+
+        async function submitFeedback() {
+            const feedback = document.getElementById('feedback').value.trim();
+            if (!feedback) {
+                alert("Vui lòng nhập phản hồi trước khi gửi!");
+                return;
+            }
+            try {
+                const response = await fetch(scriptURL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ feedback }),
+                });
+
+                if (response.ok) {
+                    alert("Phản hồi đã được gửi!");
+                    document.getElementById('feedback').value = "";
+                }
+            } catch (error) {
+                alert("Gửi phản hồi thất bại!");
+            }
         }
     </script>
 </body>
