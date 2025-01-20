@@ -1,211 +1,220 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gợi Ý Đồ Uống - Hoàn Chỉnh</title>
+    <title>Gợi Ý Nước Uống</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Giao diện chung */
         body {
             font-family: 'Poppins', sans-serif;
+            background: #f5f8ff;
             margin: 0;
-            padding: 20px;
-            background-color: #f9f9f9;
-            color: #333;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #2c3e50;
         }
 
-        h1 {
+        header {
+            background: #ffffff;
+            width: 100%;
+            padding: 15px 50px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #3498db;
+        }
+
+        header nav a {
+            margin: 0 15px;
+            font-weight: 500;
+            text-decoration: none;
+            color: #2c3e50;
+            transition: color 0.3s;
+        }
+
+        header nav a:hover {
+            color: #3498db;
+        }
+
+        .hero {
             text-align: center;
-            color: #dd183b;
-            font-size: 2.5rem;
-            margin-bottom: 30px;
+            margin: 30px 0;
         }
 
-        /* Khu vực menu chọn tiêu chí */
-        .menu {
-            margin-bottom: 20px;
-            padding: 15px;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .menu h3 {
+        .hero h1 {
+            font-size: 3rem;
             margin-bottom: 10px;
+            color: #3498db;
+        }
+
+        .hero p {
             font-size: 18px;
-            color: #555;
+            margin-bottom: 20px;
         }
 
-        .menu button {
-            margin-right: 10px;
-            margin-bottom: 10px;
+        .hero img {
+            width: 100%;
+            max-width: 800px;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        .section {
+            background: #ffffff;
+            border-radius: 15px;
+            margin: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 800px;
+        }
+
+        .section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .buttons button {
+            flex: 1;
+            min-width: 100px;
             padding: 10px 15px;
             font-size: 14px;
-            background-color: #007bff;
-            color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 50px;
+            background: linear-gradient(to right, #3498db, #5dade2);
+            color: white;
             cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        .menu button.selected {
-            background-color: #28a745;
-            transform: scale(1.1);
+        .buttons button:hover {
+            background: linear-gradient(to right, #2980b9, #3498db);
         }
 
-        .menu button:hover {
-            background-color: #0056b3;
+        .buttons button.selected {
+            background: linear-gradient(to right, #27ae60, #2ecc71);
         }
 
-        /* Khu vực hiển thị gợi ý */
-        .output {
-            margin-top: 30px;
+        .suggestion {
             text-align: center;
-        }
-
-        #suggestion {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #007bff;
-            margin-bottom: 20px;
-        }
-
-        /* Lưới sản phẩm */
-        .card-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
             margin-top: 20px;
         }
 
-        .card {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            text-align: center;
-            padding: 15px;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        .suggestion h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #3498db;
         }
 
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        .suggestion p {
+            font-size: 1.2rem;
+            color: #2c3e50;
         }
 
-        .card img {
-            width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin-bottom: 15px;
-        }
-
-        .card h4 {
-            font-size: 18px;
-            color: #555;
-            margin: 10px 0;
-        }
-
-        .card p {
-            font-size: 16px;
-            color: #dd183b;
-            font-weight: bold;
-        }
-
-        /* Nút làm mới */
         .reset-btn {
-            margin-top: 30px;
-            padding: 10px 20px;
-            background: #dc3545;
+            margin: 20px auto;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            background: linear-gradient(to right, #e74c3c, #f57373);
             color: white;
             border: none;
-            border-radius: 5px;
-            font-size: 16px;
+            border-radius: 50px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
 
         .reset-btn:hover {
-            background: #b02a37;
+            background: linear-gradient(to right, #d32f2f, #e74c3c);
         }
 
-        /* Hiệu ứng xuất hiện */
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(20px);
             }
+
             to {
                 opacity: 1;
-                transform: translateY(0);
             }
-        }
-
-        .card {
-            animation: fadeIn 0.5s ease forwards;
-        }
-
-        /* Nút "Xem thêm" */
-        .load-more {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            background: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .load-more:hover {
-            background: #0056b3;
         }
     </style>
 </head>
+
 <body>
-    <h1>Chương trình Gợi Ý Đồ Uống</h1>
-    <!-- Tiêu chí -->
-    <div class="menu">
+    <header>
+        <div class="logo">Gợi Ý Nước Uống</div>
+        <nav>
+            <a href="#">Trang Chủ</a>
+            <a href="#">Gợi Ý</a>
+            <a href="#">Liên Hệ</a>
+        </nav>
+    </header>
+
+    <div class="hero">
+        <h1>🍹 Chọn Nước Uống Phù Hợp!</h1>
+        <p>Hãy chọn các tiêu chí để nhận gợi ý đồ uống phù hợp với bạn.</p>
+        <img src="https://photo.znews.vn/w960/Uploaded/mdf_eioxrd/2021_07_06/2.jpg" alt="Hero Drink Image">
+    </div>
+
+    <div class="section">
         <h3>1. Chọn Giá Đồ Uống:</h3>
-        <button onclick="toggleCriteria('price', 'cheap')">Rẻ (5k-15k)</button>
-        <button onclick="toggleCriteria('price', 'medium')">Trung bình (20k-100k)</button>
-        <button onclick="toggleCriteria('price', 'expensive')">Đắt (100k+)</button>
+        <div class="buttons">
+            <button onclick="setCriteria('price', 'cheap')">Rẻ (5k-15k)</button>
+            <button onclick="setCriteria('price', 'medium')">Trung bình (20k trở lên)</button>
+            <button onclick="setCriteria('price', 'expensive')">Đắt (100k trở lên)</button>
+        </div>
     </div>
 
-    <div class="menu">
+    <div class="section">
         <h3>2. Chọn Độ Lành Mạnh:</h3>
-        <button onclick="toggleCriteria('health', 'veryHealthy')">Tốt cho sức khỏe</button>
-        <button onclick="toggleCriteria('health', 'healthy')">Lành mạnh</button>
-        <button onclick="toggleCriteria('health', 'unhealthy')">Không lành mạnh</button>
+        <div class="buttons">
+            <button onclick="setCriteria('health', 'veryHealthy')">Tốt cho sức khỏe</button>
+            <button onclick="setCriteria('health', 'notTooHarmful')">Không quá hại sức khỏe</button>
+            <button onclick="setCriteria('health', 'healthy')">Lành mạnh</button>
+            <button onclick="setCriteria('health', 'unhealthy')">Không lành mạnh</button>
+        </div>
     </div>
 
-    <div class="menu">
+    <div class="section">
         <h3>3. Chọn Mục Đích Uống:</h3>
-        <button onclick="toggleCriteria('purpose', 'refresh')">Giải khát</button>
-        <button onclick="toggleCriteria('purpose', 'nutrition')">Dinh dưỡng</button>
-        <button onclick="toggleCriteria('purpose', 'both')">Cả hai</button>
+        <div class="buttons">
+            <button onclick="setCriteria('purpose', 'refresh')">Giải khát</button>
+            <button onclick="setCriteria('purpose', 'nutrition')">Vì chất dinh dưỡng</button>
+            <button onclick="setCriteria('purpose', 'both')">Vì cả hai</button>
+        </div>
     </div>
 
-    <!-- Kết quả gợi ý -->
-    <div class="output">
+    <div class="section suggestion">
         <h3>Gợi ý:</h3>
-        <div id="suggestion">Chọn đủ tiêu chí để nhận gợi ý...</div>
-        <div id="results" class="card-container"></div>
-        <button id="loadMore" class="load-more" style="display: none;" onclick="loadMore()">Xem thêm</button>
+        <p id="suggestion">Hãy chọn đủ tiêu chí để nhận gợi ý!</p>
     </div>
 
-    <!-- Nút làm mới -->
-    <button class="reset-btn" onclick="resetAll()">Làm mới lựa chọn</button>
+    <button class="reset-btn" onclick="resetAll()">🔄 Làm mới</button>
 
     <script>
         const criteria = { price: null, health: null, purpose: null };
-        const maxResultsPerPage = 6; // Số gợi ý hiển thị mỗi lần
-        let currentPage = 0;
 
-        const rules = [
+         const rules = [
                 { rule: "cheap AND veryHealthy AND refresh", output: "Nước ngọt không có ga: Nước ép cam, Nước ép dứa, Trà xanh." },
                 { rule: "cheap AND veryHealthy AND nutrition", output: "Nước ép trái cây giá rẻ: Nước ép táo, Nước ép lựu." },
                 { rule: "cheap AND veryHealthy AND both", output: "Trà thảo mộc: Trà gừng, Trà hoa cúc." },
@@ -244,75 +253,36 @@
                 { rule: "expensive AND unhealthy AND both", output: "Rượu vang: Rượu vang đỏ, Rượu vang trắng." },
             ];
 
-        function toggleCriteria(type, value) {
+        function resetSelection(button) {
+            const buttons = button.parentElement.querySelectorAll('button');
+            buttons.forEach(btn => btn.classList.remove('selected'));
+            button.classList.add('selected');
+        }
+
+        function setCriteria(type, value) {
             criteria[type] = value;
-            const buttons = document.querySelectorAll(`.menu button`);
-            buttons.forEach(btn => {
-                if (btn.textContent.includes(value)) btn.classList.add("selected");
-                else btn.classList.remove("selected");
-            });
+            resetSelection(event.target);
             updateSuggestion();
         }
 
         function updateSuggestion() {
             const { price, health, purpose } = criteria;
-            const results = document.getElementById("results");
-            const suggestion = document.getElementById("suggestion");
-            results.innerHTML = ""; // Xóa gợi ý trước đó
-
+            const suggestion = document.getElementById('suggestion');
             if (!price || !health || !purpose) {
-                suggestion.textContent = "Hãy chọn đủ các tiêu chí để nhận gợi ý!";
-                document.getElementById("loadMore").style.display = "none";
+                suggestion.textContent = "Hãy chọn đủ tiêu chí để nhận gợi ý!";
                 return;
             }
-
-            const matched = rules.filter(rule => rule.rule === `${price} AND ${health} AND ${purpose}`);
-            if (matched.length) {
-                suggestion.textContent = "Gợi ý của bạn:";
-                displayResults(matched);
-            } else {
-                suggestion.textContent = "Không có gợi ý phù hợp!";
-                document.getElementById("loadMore").style.display = "none";
-            }
-        }
-
-        function displayResults(matched) {
-            const results = document.getElementById("results");
-            const loadMoreBtn = document.getElementById("loadMore");
-            const total = matched.length;
-            const start = currentPage * maxResultsPerPage;
-            const end = start + maxResultsPerPage;
-
-            matched.slice(start, end).forEach(drink => {
-                results.innerHTML += `
-                    <div class="card">
-                        <img src="${drink.img}" alt="${drink.name}">
-                        <h4>${drink.name}</h4>
-                        <p>Giá: ${drink.price}</p>
-                    </div>
-                `;
-            });
-
-            currentPage++;
-            if (end < total) {
-                loadMoreBtn.style.display = "inline-block";
-            } else {
-                loadMoreBtn.style.display = "none";
-            }
-        }
-
-        function loadMore() {
-            updateSuggestion();
+            const ruleKey = `${price} AND ${health} AND ${purpose}`;
+            const matched = rules.find(rule => rule.rule === ruleKey);
+            suggestion.textContent = matched ? matched.output : "Không tìm thấy gợi ý phù hợp!";
         }
 
         function resetAll() {
-            Object.keys(criteria).forEach(key => criteria[key] = null);
-            document.querySelectorAll(".menu button").forEach(btn => btn.classList.remove("selected"));
-            document.getElementById("suggestion").textContent = "Chọn đủ tiêu chí để nhận gợi ý...";
-            document.getElementById("results").innerHTML = "";
-            document.getElementById("loadMore").style.display = "none";
-            currentPage = 0;
+            Object.keys(criteria).forEach(key => (criteria[key] = null));
+            document.querySelectorAll('button').forEach(btn => btn.classList.remove('selected'));
+            document.getElementById('suggestion').textContent = "Hãy chọn đủ tiêu chí để nhận gợi ý!";
         }
     </script>
 </body>
+
 </html>
