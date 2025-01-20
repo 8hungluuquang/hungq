@@ -75,10 +75,10 @@
             background: rgba(0, 0, 0, 0.85);
             border-radius: 15px;
             margin: 20px;
-            padding: 20px;
+            padding: 25px; /* Tăng khoảng cách bên trong bảng chọn */
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-            width: 90%;
-            max-width: 800px;
+            width: 95%; /* Làm cho bảng chọn rộng hơn */
+            max-width: 900px; /* Tăng kích thước tối đa */
         }
 
         .section h3 {
@@ -90,14 +90,15 @@
         .buttons {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 15px; /* Tăng khoảng cách giữa các nút */
+            justify-content: center; /* Căn giữa các nút */
         }
 
         .buttons button {
             flex: 1;
-            min-width: 100px;
-            padding: 10px 15px;
-            font-size: 14px;
+            min-width: 120px; /* Tăng kích thước tối thiểu của nút */
+            padding: 12px 20px; /* Tăng kích thước nút */
+            font-size: 16px; /* Tăng kích thước chữ */
             border: none;
             border-radius: 50px;
             background: linear-gradient(to right, #16a085, #1abc9c);
