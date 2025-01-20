@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gợi Ý Đồ Uống - Mở Rộng</title>
+    <title>Gợi Ý Đồ Uống - Hoàn Chỉnh</title>
     <style>
+        /* Toàn bộ giao diện */
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
@@ -17,30 +18,32 @@
             text-align: center;
             color: #dd183b;
             font-size: 2.5rem;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
+        /* Khu vực menu chọn tiêu chí */
         .menu {
             margin-bottom: 20px;
             padding: 10px;
-            background: #fff;
+            background-color: white;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .menu h3 {
-            color: #555;
             margin-bottom: 10px;
+            font-size: 18px;
+            color: #555;
         }
 
         .menu button {
             margin-right: 10px;
             padding: 10px 15px;
-            font-size: 14px;
             background-color: #007bff;
             color: white;
             border: none;
             border-radius: 5px;
+            font-size: 14px;
             cursor: pointer;
             transition: background-color 0.3s;
         }
@@ -49,6 +52,11 @@
             background-color: #28a745;
         }
 
+        .menu button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Khu vực hiển thị gợi ý */
         .output {
             margin-top: 30px;
             text-align: center;
@@ -94,14 +102,15 @@
             color: #555;
         }
 
+        /* Nút làm mới */
         .reset-btn {
-            display: block;
-            margin: 30px auto;
+            margin-top: 30px;
             padding: 10px 20px;
             background: #dc3545;
             color: white;
             border: none;
             border-radius: 5px;
+            font-size: 16px;
             cursor: pointer;
         }
 
@@ -111,7 +120,7 @@
     </style>
 </head>
 <body>
-    <h1>Gợi Ý Đồ Uống</h1>
+    <h1>Chương trình Gợi Ý Đồ Uống</h1>
 
     <!-- Tiêu chí -->
     <div class="menu">
@@ -135,20 +144,21 @@
         <button onclick="toggleCriteria('purpose', 'both')">Cả hai</button>
     </div>
 
-    <!-- Gợi ý -->
+    <!-- Kết quả gợi ý -->
     <div class="output">
         <h3>Gợi ý:</h3>
         <div id="suggestion">Chọn đủ tiêu chí để nhận gợi ý...</div>
         <div id="results" class="card-container"></div>
     </div>
 
+    <!-- Nút làm mới -->
     <button class="reset-btn" onclick="resetAll()">Làm mới lựa chọn</button>
 
     <script>
         // Tiêu chí người dùng chọn
         const criteria = { price: null, health: null, purpose: null };
 
-        // Danh sách luật gợi ý
+        // Danh sách 20 luật gợi ý
         const rules = [
             { rule: "cheap AND veryHealthy AND refresh", name: "Nước ép cam", img: "orange_juice.jpg", price: "10k" },
             { rule: "cheap AND healthy AND nutrition", name: "Nước lọc tinh khiết", img: "pure_water.jpg", price: "5k" },
@@ -157,7 +167,7 @@
             { rule: "medium AND healthy AND both", name: "Trà sữa ít đường", img: "milk_tea.jpg", price: "30k" },
             { rule: "medium AND unhealthy AND nutrition", name: "Trà sữa nhiều topping", img: "topping_milk_tea.jpg", price: "40k" },
             { rule: "expensive AND veryHealthy AND refresh", name: "Nước detox cao cấp", img: "detox_water.jpg", price: "120k" },
-            { rule: "expensive AND healthy AND both", name: "Nước ép hoa quả nhập khẩu", img: "imported_juice.jpg", price: "150k" },
+            { rule: "expensive AND healthy AND both", name: "Nước ép nhập khẩu", img: "imported_juice.jpg", price: "150k" },
             { rule: "expensive AND unhealthy AND refresh", name: "Cocktail", img: "cocktail.jpg", price: "200k" },
             { rule: "cheap AND veryHealthy AND nutrition", name: "Trà xanh", img: "green_tea.jpg", price: "15k" },
             { rule: "medium AND healthy AND nutrition", name: "Sữa hạt", img: "nut_milk.jpg", price: "35k" },
@@ -172,16 +182,13 @@
             { rule: "expensive AND healthy AND nutrition", name: "Nước ép hữu cơ", img: "organic_juice.jpg", price: "180k" }
         ];
 
-        // Hàm chuyển đổi tiêu chí
+        // Chọn tiêu chí
         function toggleCriteria(type, value) {
             criteria[type] = value;
             const buttons = document.querySelectorAll(`.menu button`);
             buttons.forEach(btn => {
-                if (btn.textContent.includes(value)) {
-                    btn.classList.add("selected");
-                } else {
-                    btn.classList.remove("selected");
-                }
+                if (btn.textContent.includes(value)) btn.classList.add("selected");
+                else btn.classList.remove("selected");
             });
             updateSuggestion();
         }
