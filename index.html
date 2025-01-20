@@ -3,279 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chương trình Gợi Ý Nước Uống</title>
+    <title>Contact Us</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Roboto', sans-serif;
-            background: linear-gradient(to bottom, #f4f7fc, #ffffff);
             margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            padding: 0;
+            background: #f9fbfc;
         }
-        h1 {
+        header {
+            background: linear-gradient(to right, #4e8cff, #1f6eff);
+            color: white;
+            padding: 20px;
             text-align: center;
-            color: #2c3e50;
-            font-weight: 700;
-            margin-bottom: 30px;
+        }
+        header h1 {
+            margin: 0;
             font-size: 3rem;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
         }
-        .menu {
-            margin: 20px 0;
-            padding: 20px;
-            background: #ffffff;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 600px;
-        }
-        .menu h3 {
-            color: #34495e;
-            margin-bottom: 15px;
-            font-weight: 500;
-            text-align: center;
-        }
-        .menu button {
-            margin: 5px 10px;
-            padding: 12px 20px;
-            font-size: 14px;
-            background: linear-gradient(to right, #3498db, #5dade2);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .menu button:hover {
-            background: linear-gradient(to right, #2980b9, #3498db);
-            transform: scale(1.1);
-        }
-        .menu button.selected {
-            background: linear-gradient(to right, #2ecc71, #27ae60);
-            transform: scale(1.1);
-        }
-        .output {
-            margin-top: 30px;
-            padding: 20px;
-            background: linear-gradient(to bottom, #ffffff, #ecf0f1);
-            border-radius: 10px;
-            text-align: center;
-            font-size: 16px;
-            color: #34495e;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 600px;
-        }
-        .output h3 {
-            margin: 0 0 10px;
-            color: #3498db;
-            font-weight: 600;
-        }
-        .output p {
-            font-size: 18px;
-            font-weight: 500;
-            color: #2c3e50;
-        }
-        .reset-btn {
-            display: block;
+        .container {
+            max-width: 1200px;
             margin: 30px auto;
-            padding: 15px 30px;
-            font-size: 16px;
-            font-weight: bold;
-            background: linear-gradient(to right, #e74c3c, #f57373);
+            padding: 20px;
+        }
+        .form-section, .info-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .form-section {
+            justify-content: space-between;
+        }
+        .form-container {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        .form-container h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .form-container input, .form-container textarea, .form-container button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .form-container button {
+            background: linear-gradient(to right, #4e8cff, #1f6eff);
             color: white;
             border: none;
-            border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: background 0.3s ease;
         }
-        .reset-btn:hover {
-            background: linear-gradient(to right, #d32f2f, #e74c3c);
-            transform: scale(1.1);
+        .form-container button:hover {
+            background: linear-gradient(to right, #1f6eff, #4e8cff);
         }
-        #rating-container {
-            display: none;
-            margin-top: 20px;
+        .info-box {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
             text-align: center;
         }
-        #stars button {
-            font-size: 24px;
-            border: none;
-            background: none;
-            cursor: pointer;
-            color: #ccc;
-            transition: transform 0.2s ease, color 0.2s ease;
+        .info-box h3 {
+            color: #333;
+            margin-bottom: 10px;
         }
-        #stars button:hover {
-            transform: scale(1.3);
-            color: gold;
+        .info-box p {
+            color: #555;
+            margin: 0;
         }
-        #stars button.selected {
-            color: gold;
+        footer {
+            background: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin-top: 30px;
         }
-        #feedback-container {
-            display: none;
-            margin-top: 20px;
+        footer p {
+            margin: 5px 0;
+            font-size: 0.9rem;
         }
-        #feedback {
+        .map-container {
+            margin-top: 30px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        iframe {
             width: 100%;
-            max-width: 600px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            height: 400px;
+            border: none;
         }
     </style>
 </head>
 <body>
-    <h1>Chương trình Gợi Ý Nước Uống</h1>
-    <div class="menu">
-        <h3>1. Chọn Giá Đồ Uống:</h3>
-        <button onclick="setCriteria('price', 'cheap')">Rẻ (5k-15k)</button>
-        <button onclick="setCriteria('price', 'medium')">Trung bình (20k trở lên)</button>
-        <button onclick="setCriteria('price', 'expensive')">Đắt (100k trở lên)</button>
-    </div>
-    <div class="menu">
-        <h3>2. Chọn Độ Lành Mạnh:</h3>
-        <button onclick="setCriteria('health', 'veryHealthy')">Tốt cho sức khỏe</button>
-        <button onclick="setCriteria('health', 'notTooHarmful')">Không quá hại sức khỏe</button>
-        <button onclick="setCriteria('health', 'healthy')">Lành mạnh</button>
-        <button onclick="setCriteria('health', 'unhealthy')">Không lành mạnh</button>
-    </div>
-    <div class="menu">
-        <h3>3. Chọn Mục Đích Uống:</h3>
-        <button onclick="setCriteria('purpose', 'refresh')">Giải khát</button>
-        <button onclick="setCriteria('purpose', 'nutrition')">Vì chất dinh dưỡng</button>
-        <button onclick="setCriteria('purpose', 'both')">Vì cả hai</button>
-    </div>
-    <div class="output">
-        <h3>Gợi ý:</h3>
-        <p id="suggestion">Chọn đủ tiêu chí để nhận gợi ý...</p>
-    </div>
-    <div id="rating-container">
-        <h3>Đánh giá gợi ý:</h3>
-        <div id="stars">
-            <button onclick="rateSuggestion(1)">☆</button>
-            <button onclick="rateSuggestion(2)">☆</button>
-            <button onclick="rateSuggestion(3)">☆</button>
-            <button onclick="rateSuggestion(4)">☆</button>
-            <button onclick="rateSuggestion(5)">☆</button>
+    <header>
+        <h1>Contact Us</h1>
+    </header>
+    <div class="container">
+        <div class="form-section">
+            <div class="form-container">
+                <h2>Send Us a Message</h2>
+                <input type="text" placeholder="Your Name">
+                <input type="email" placeholder="Your Email">
+                <input type="text" placeholder="Your Phone">
+                <textarea placeholder="Your Message" rows="5"></textarea>
+                <button>Submit</button>
+            </div>
+            <div class="info-box">
+                <h3>Our Contact</h3>
+                <p><strong>Phone:</strong> (+876) 765 6865</p>
+                <p><strong>Email:</strong> mail@influenca.id</p>
+                <p><strong>Address:</strong> London Eye, London UK</p>
+            </div>
         </div>
-        <div id="feedback-container">
-            <textarea id="feedback" rows="4" placeholder="Hãy nhập phản hồi của bạn..."></textarea>
-            <button onclick="submitFeedback()">Gửi phản hồi</button>
+        <div class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.8354345093943!2d144.95373531592104!3d-37.8172099797517!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642af0f11fd81%3A0xf577d7f3d5e7ec19!2sEureka%20Skydeck!5e0!3m2!1sen!2sau!4v1615336672024!5m2!1sen!2sau"></iframe>
         </div>
-        <p id="thank-you" style="display:none; color: green; font-weight: bold; margin-top: 20px;">Cảm ơn vì đánh giá cao của bạn! 😄</p>
     </div>
-    <button class="reset-btn" onclick="resetAll()">Làm mới lựa chọn</button>
-
-    <script>
-        const criteria = { price: null, health: null, purpose: null };
-        let hasRated = false;
-
-        function resetSelection(button) {
-            const buttons = button.parentElement.querySelectorAll('button');
-            buttons.forEach(btn => btn.classList.remove('selected'));
-            button.classList.add('selected');
-        }
-
-        function setCriteria(type, value) {
-            criteria[type] = value;
-            resetSelection(event.target);
-            updateSuggestion();
-        }
-
-        function updateSuggestion() {
-            const { price, health, purpose } = criteria;
-            const suggestion = document.getElementById('suggestion');
-            if (!price || !health || !purpose) {
-                suggestion.textContent = "Hãy chọn đủ các tiêu chí để nhận gợi ý!";
-                document.getElementById('rating-container').style.display = "none";
-                return;
-            }
-            const rules = [
-                { rule: "cheap AND veryHealthy AND refresh", output: "Nước ngọt không có ga: Nước ép cam, Nước ép dứa, Trà xanh." },
-                { rule: "cheap AND veryHealthy AND nutrition", output: "Nước ép trái cây giá rẻ: Nước ép táo, Nước ép lựu." },
-                { rule: "cheap AND veryHealthy AND both", output: "Trà thảo mộc: Trà gừng, Trà hoa cúc." },
-                { rule: "cheap AND notTooHarmful AND refresh", output: "Nước ngọt có ga: Coca-Cola, Pepsi, Sprite." },
-                { rule: "cheap AND notTooHarmful AND nutrition", output: "Loại nước chưa tồn tại!" },
-                { rule: "cheap AND notTooHarmful AND both", output: "Loại nước chưa tồn tại!" },
-                { rule: "cheap AND healthy AND refresh", output: "Nước lọc giá rẻ: Nước tinh khiết, Nước khoáng đóng chai." },
-                { rule: "cheap AND healthy AND nutrition", output: "Loại nước chưa tồn tại!" },
-                { rule: "cheap AND healthy AND both", output: "Loại nước chưa tồn tại!" },
-                { rule: "cheap AND unhealthy AND refresh", output: "Nước ngọt giá rẻ: Soda vị đặc biệt, Nước ngọt đóng chai." },
-                { rule: "cheap AND unhealthy AND nutrition", output: "Loại nước chưa tồn tại!" },
-                { rule: "cheap AND unhealthy AND both", output: "Loại nước chưa tồn tại!" },
-                { rule: "medium AND veryHealthy AND refresh", output: "Nước dừa tươi, Nước ép cà rốt." },
-                { rule: "medium AND veryHealthy AND nutrition", output: "Nước ép rau củ: Nước ép củ cải đỏ, Nước ép dưa leo." },
-                { rule: "medium AND veryHealthy AND both", output: "Nước tốt cho sức khỏe: Trà hoa cúc, Kombucha." },
-                { rule: "medium AND notTooHarmful AND refresh", output: "Trà sữa ít đường: Trà sữa matcha, Trà sữa trân châu ít ngọt." },
-                { rule: "medium AND notTooHarmful AND nutrition", output: "Nước tăng lực ít đường: Red Bull không đường, Monster Ultra." },
-                { rule: "medium AND notTooHarmful AND both", output: "Loại nước chưa tồn tại!" },
-                { rule: "medium AND healthy AND refresh", output: "Kombucha: Kombucha gừng, Kombucha dứa." },
-                { rule: "medium AND healthy AND nutrition", output: "Sữa hạt: Sữa óc chó, Sữa hạnh nhân." },
-                { rule: "medium AND healthy AND both", output: "Sữa chua uống: Sữa chua uống vị dâu, Sữa chua uống vị việt quất." },
-                { rule: "medium AND unhealthy AND refresh", output: "Loại nước chưa tồn tại!" },
-                { rule: "medium AND unhealthy AND nutrition", output: "Loại nước chưa tồn tại!" },
-                { rule: "medium AND unhealthy AND both", output: "Loại nước chưa tồn tại!" },
-                { rule: "expensive AND veryHealthy AND refresh", output: "Nước khoáng cao cấp: Evian, Perrier." },
-                { rule: "expensive AND veryHealthy AND nutrition", output: "Nước ép rau củ cao cấp: Nước ép cần tây, Nước ép cà rốt." },
-                { rule: "expensive AND veryHealthy AND both", output: "Nước detox: Detox chanh, Detox bạc hà." },
-                { rule: "expensive AND notTooHarmful AND refresh", output: "Nước ngọt cao cấp: Soda vị cherry, Soda vanilla." },
-                { rule: "expensive AND notTooHarmful AND nutrition", output: "Loại nước chưa tồn tại!" },
-                { rule: "expensive AND notTooHarmful AND both", output: "Loại nước chưa tồn tại!" },
-                { rule: "expensive AND healthy AND refresh", output: "Nước khoáng nhập khẩu: San Pellegrino, Perrier." },
-                { rule: "expensive AND healthy AND nutrition", output: "Loại nước chưa tồn tại!" },
-                { rule: "expensive AND healthy AND both", output: "Loại nước chưa tồn tại!" },
-                { rule: "expensive AND unhealthy AND refresh", output: "Loại nước chưa tồn tại!" },
-                { rule: "expensive AND unhealthy AND nutrition", output: "Loại nước chưa tồn tại!" },
-                { rule: "expensive AND unhealthy AND both", output: "Rượu vang: Rượu vang đỏ, Rượu vang trắng." },
-            ];
-            const matched = rules.find(rule => rule.rule === `${price} AND ${health} AND ${purpose}`);
-            suggestion.textContent = matched ? matched.output : "Không tìm thấy gợi ý phù hợp!";
-            document.getElementById('rating-container').style.display = "block";
-        }
-
-        async function rateSuggestion(stars) {
-            hasRated = true;
-
-            const starButtons = document.querySelectorAll('#stars button');
-            starButtons.forEach((btn, index) => {
-                btn.textContent = index < stars ? '⭐' : '☆';
-                btn.classList.toggle('selected', index < stars);
-            });
-        }
-
-        function resetAll() {
-            // Đặt lại tất cả tiêu chí về null
-            Object.keys(criteria).forEach(key => criteria[key] = null);
-
-            // Xóa trạng thái 'selected' của các nút
-            document.querySelectorAll('.menu button').forEach(btn => btn.classList.remove('selected'));
-
-            // Đặt lại văn bản gợi ý
-            const suggestion = document.getElementById('suggestion');
-            suggestion.textContent = "Chọn đủ tiêu chí để nhận gợi ý...";
-
-            // Ẩn phần đánh giá và phản hồi
-            document.getElementById('rating-container').style.display = "none";
-            document.getElementById('feedback-container').style.display = "none";
-            document.getElementById('thank-you').style.display = "none";
-
-            // Đặt lại các nút sao về trạng thái ban đầu
-            document.querySelectorAll('#stars button').forEach(btn => {
-                btn.textContent = "☆";
-                btn.classList.remove('selected');
-            });
-
-            hasRated = false; // Đặt lại trạng thái đánh giá
-        }
-    </script>
+    <footer>
+        <p>&copy; 2023 Influenca Template - All Rights Reserved</p>
+    </footer>
 </body>
 </html>
