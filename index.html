@@ -14,17 +14,18 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            color: #2c3e50;
-            background: url('https://i.pinimg.com/originals/8b/91/69/8b9169dc95e92b89c563404e1df2e0ad.jpg') no-repeat center center fixed;
+            color: #fff;
+            background-image: url('https://i.pinimg.com/originals/f9/26/54/f92654e8f123502d282ff5f2bc27215e.jpg'); /* Đổi sang hình nền mới */
             background-size: cover;
-            overflow: hidden;
+            background-attachment: fixed;
+            background-position: center;
         }
 
         header {
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(0, 0, 0, 0.6);
             width: 100%;
             padding: 15px 50px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -33,34 +34,36 @@
         header .logo img {
             height: 50px;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
 
         header nav a {
             margin: 0 15px;
             font-weight: 500;
             text-decoration: none;
-            color: #2c3e50;
+            color: #fff;
             transition: color 0.3s;
         }
 
         header nav a:hover {
-            color: #3498db;
+            color: #ff9800;
         }
 
         .hero {
             text-align: center;
             margin: 30px 0;
             padding: 20px;
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(0, 0, 0, 0.6);
             border-radius: 15px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 2s ease-in-out;
         }
 
         .hero h1 {
             font-size: 3.5rem;
             margin-bottom: 10px;
-            color: #3498db;
+            color: #ffcc00;
+            animation: bounceIn 1.5s ease-in-out;
         }
 
         .hero p {
@@ -69,19 +72,20 @@
         }
 
         .section {
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(0, 0, 0, 0.7);
             border-radius: 15px;
             margin: 20px;
             padding: 20px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
             width: 90%;
             max-width: 800px;
+            animation: fadeUp 1.5s ease-in-out;
         }
 
         .section h3 {
             font-size: 1.8rem;
             margin-bottom: 15px;
-            color: #2c3e50;
+            color: #ffcc00;
         }
 
         .buttons {
@@ -97,20 +101,20 @@
             font-size: 14px;
             border: none;
             border-radius: 50px;
-            background: linear-gradient(to right, #3498db, #5dade2);
-            color: white;
+            background: linear-gradient(to right, #ff9800, #ffcc00);
+            color: #fff;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease, transform 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
 
         .buttons button:hover {
             transform: scale(1.1);
-            background: linear-gradient(to right, #2980b9, #3498db);
+            background: linear-gradient(to right, #ff5722, #ff9800);
         }
 
         .buttons button.selected {
-            background: linear-gradient(to right, #27ae60, #2ecc71);
+            background: linear-gradient(to right, #4caf50, #81c784);
         }
 
         .suggestion {
@@ -121,12 +125,12 @@
         .suggestion h3 {
             font-size: 1.8rem;
             margin-bottom: 10px;
-            color: #3498db;
+            color: #ffcc00;
         }
 
         .suggestion p {
             font-size: 1.2rem;
-            color: #2c3e50;
+            color: #fff;
         }
 
         .reset-btn {
@@ -134,17 +138,56 @@
             padding: 12px 30px;
             font-size: 16px;
             font-weight: bold;
-            background: linear-gradient(to right, #e74c3c, #f57373);
+            background: linear-gradient(to right, #e91e63, #f06292);
             color: white;
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease, transform 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         }
 
         .reset-btn:hover {
-            background: linear-gradient(to right, #d32f2f, #e74c3c);
+            transform: scale(1.1);
+            background: linear-gradient(to right, #c2185b, #e91e63);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+
+            60% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1);
+            }
         }
     </style>
 </head>
@@ -205,43 +248,43 @@
         const criteria = { price: null, health: null, purpose: null };
 
         const rules = [
-            { rule: "cheap AND veryHealthy AND refresh", output: "Nước ngọt không có ga: Nước ép cam, Nước ép dứa, Trà xanh." },
-            { rule: "cheap AND veryHealthy AND nutrition", output: "Nước ép trái cây giá rẻ: Nước ép táo, Nước ép lựu." },
-            { rule: "cheap AND veryHealthy AND both", output: "Trà thảo mộc: Trà gừng, Trà hoa cúc." },
-            { rule: "cheap AND notTooHarmful AND refresh", output: "Nước ngọt có ga: Coca-Cola, Pepsi, Sprite." },
-            { rule: "cheap AND notTooHarmful AND nutrition", output: "Loại nước chưa tồn tại!" },
-            { rule: "cheap AND notTooHarmful AND both", output: "Loại nước chưa tồn tại!" },
-            { rule: "cheap AND healthy AND refresh", output: "Nước lọc giá rẻ: Nước tinh khiết, Nước khoáng đóng chai." },
-            { rule: "cheap AND healthy AND nutrition", output: "Loại nước chưa tồn tại!" },
-            { rule: "cheap AND healthy AND both", output: "Loại nước chưa tồn tại!" },
-            { rule: "cheap AND unhealthy AND refresh", output: "Nước ngọt giá rẻ: Soda vị đặc biệt, Nước ngọt đóng chai." },
-            { rule: "cheap AND unhealthy AND nutrition", output: "Loại nước chưa tồn tại!" },
-            { rule: "cheap AND unhealthy AND both", output: "Loại nước chưa tồn tại!" },
-            { rule: "medium AND veryHealthy AND refresh", output: "Nước dừa tươi, Nước ép cà rốt." },
-            { rule: "medium AND veryHealthy AND nutrition", output: "Nước ép rau củ: Nước ép củ cải đỏ, Nước ép dưa leo." },
-            { rule: "medium AND veryHealthy AND both", output: "Nước tốt cho sức khỏe: Trà hoa cúc, Kombucha." },
-            { rule: "medium AND notTooHarmful AND refresh", output: "Trà sữa ít đường: Trà sữa matcha, Trà sữa trân châu ít ngọt." },
-            { rule: "medium AND notTooHarmful AND nutrition", output: "Nước tăng lực ít đường: Red Bull không đường, Monster Ultra." },
-            { rule: "medium AND notTooHarmful AND both", output: "Loại nước chưa tồn tại!" },
-            { rule: "medium AND healthy AND refresh", output: "Kombucha: Kombucha gừng, Kombucha dứa." },
-            { rule: "medium AND healthy AND nutrition", output: "Sữa hạt: Sữa óc chó, Sữa hạnh nhân." },
-            { rule: "medium AND healthy AND both", output: "Sữa chua uống: Sữa chua uống vị dâu, Sữa chua uống vị việt quất." },
-            { rule: "medium AND unhealthy AND refresh", output: "Loại nước chưa tồn tại!" },
-            { rule: "medium AND unhealthy AND nutrition", output: "Loại nước chưa tồn tại!" },
-            { rule: "medium AND unhealthy AND both", output: "Loại nước chưa tồn tại!" },
-            { rule: "expensive AND veryHealthy AND refresh", output: "Nước khoáng cao cấp: Evian, Perrier." },
-            { rule: "expensive AND veryHealthy AND nutrition", output: "Nước ép rau củ cao cấp: Nước ép cần tây, Nước ép cà rốt." },
-            { rule: "expensive AND veryHealthy AND both", output: "Nước detox: Detox chanh, Detox bạc hà." },
-            { rule: "expensive AND notTooHarmful AND refresh", output: "Nước ngọt cao cấp: Soda vị cherry, Soda vanilla." },
-            { rule: "expensive AND notTooHarmful AND nutrition", output: "Loại nước chưa tồn tại!" },
-            { rule: "expensive AND notTooHarmful AND both", output: "Loại nước chưa tồn tại!" },
-            { rule: "expensive AND healthy AND refresh", output: "Nước khoáng nhập khẩu: San Pellegrino, Perrier." },
-            { rule: "expensive AND healthy AND nutrition", output: "Loại nước chưa tồn tại!" },
-            { rule: "expensive AND healthy AND both", output: "Loại nước chưa tồn tại!" },
-            { rule: "expensive AND unhealthy AND refresh", output: "Loại nước chưa tồn tại!" },
-            { rule: "expensive AND unhealthy AND nutrition", output: "Loại nước chưa tồn tại!" },
-            { rule: "expensive AND unhealthy AND both", output: "Rượu vang: Rượu vang đỏ, Rượu vang trắng." },
-        ];
+                { rule: "cheap AND veryHealthy AND refresh", output: "Nước ngọt không có ga: Nước ép cam, Nước ép dứa, Trà xanh." },
+                { rule: "cheap AND veryHealthy AND nutrition", output: "Nước ép trái cây giá rẻ: Nước ép táo, Nước ép lựu." },
+                { rule: "cheap AND veryHealthy AND both", output: "Trà thảo mộc: Trà gừng, Trà hoa cúc." },
+                { rule: "cheap AND notTooHarmful AND refresh", output: "Nước ngọt có ga: Coca-Cola, Pepsi, Sprite." },
+                { rule: "cheap AND notTooHarmful AND nutrition", output: "Loại nước chưa tồn tại!" },
+                { rule: "cheap AND notTooHarmful AND both", output: "Loại nước chưa tồn tại!" },
+                { rule: "cheap AND healthy AND refresh", output: "Nước lọc giá rẻ: Nước tinh khiết, Nước khoáng đóng chai." },
+                { rule: "cheap AND healthy AND nutrition", output: "Loại nước chưa tồn tại!" },
+                { rule: "cheap AND healthy AND both", output: "Loại nước chưa tồn tại!" },
+                { rule: "cheap AND unhealthy AND refresh", output: "Nước ngọt giá rẻ: Soda vị đặc biệt, Nước ngọt đóng chai." },
+                { rule: "cheap AND unhealthy AND nutrition", output: "Loại nước chưa tồn tại!" },
+                { rule: "cheap AND unhealthy AND both", output: "Loại nước chưa tồn tại!" },
+                { rule: "medium AND veryHealthy AND refresh", output: "Nước dừa tươi, Nước ép cà rốt." },
+                { rule: "medium AND veryHealthy AND nutrition", output: "Nước ép rau củ: Nước ép củ cải đỏ, Nước ép dưa leo." },
+                { rule: "medium AND veryHealthy AND both", output: "Nước tốt cho sức khỏe: Trà hoa cúc, Kombucha." },
+                { rule: "medium AND notTooHarmful AND refresh", output: "Trà sữa ít đường: Trà sữa matcha, Trà sữa trân châu ít ngọt." },
+                { rule: "medium AND notTooHarmful AND nutrition", output: "Nước tăng lực ít đường: Red Bull không đường, Monster Ultra." },
+                { rule: "medium AND notTooHarmful AND both", output: "Loại nước chưa tồn tại!" },
+                { rule: "medium AND healthy AND refresh", output: "Kombucha: Kombucha gừng, Kombucha dứa." },
+                { rule: "medium AND healthy AND nutrition", output: "Sữa hạt: Sữa óc chó, Sữa hạnh nhân." },
+                { rule: "medium AND healthy AND both", output: "Sữa chua uống: Sữa chua uống vị dâu, Sữa chua uống vị việt quất." },
+                { rule: "medium AND unhealthy AND refresh", output: "Loại nước chưa tồn tại!" },
+                { rule: "medium AND unhealthy AND nutrition", output: "Loại nước chưa tồn tại!" },
+                { rule: "medium AND unhealthy AND both", output: "Loại nước chưa tồn tại!" },
+                { rule: "expensive AND veryHealthy AND refresh", output: "Nước khoáng cao cấp: Evian, Perrier." },
+                { rule: "expensive AND veryHealthy AND nutrition", output: "Nước ép rau củ cao cấp: Nước ép cần tây, Nước ép cà rốt." },
+                { rule: "expensive AND veryHealthy AND both", output: "Nước detox: Detox chanh, Detox bạc hà." },
+                { rule: "expensive AND notTooHarmful AND refresh", output: "Nước ngọt cao cấp: Soda vị cherry, Soda vanilla." },
+                { rule: "expensive AND notTooHarmful AND nutrition", output: "Loại nước chưa tồn tại!" },
+                { rule: "expensive AND notTooHarmful AND both", output: "Loại nước chưa tồn tại!" },
+                { rule: "expensive AND healthy AND refresh", output: "Nước khoáng nhập khẩu: San Pellegrino, Perrier." },
+                { rule: "expensive AND healthy AND nutrition", output: "Loại nước chưa tồn tại!" },
+                { rule: "expensive AND healthy AND both", output: "Loại nước chưa tồn tại!" },
+                { rule: "expensive AND unhealthy AND refresh", output: "Loại nước chưa tồn tại!" },
+                { rule: "expensive AND unhealthy AND nutrition", output: "Loại nước chưa tồn tại!" },
+                { rule: "expensive AND unhealthy AND both", output: "Rượu vang: Rượu vang đỏ, Rượu vang trắng." },
+            ];
 
         function resetSelection(button) {
             const buttons = button.parentElement.querySelectorAll('button');
