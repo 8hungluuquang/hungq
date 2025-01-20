@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gợi Ý Đồ Uống - Hoàn Chỉnh</title>
     <style>
-        /* Giao diện chung */
+        /* Toàn bộ giao diện */
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 20px;
-            background-color: #f7f7f7;
+            background-color: #f9f9f9;
             color: #333;
         }
 
@@ -58,6 +58,77 @@
             background-color: #0056b3;
         }
 
+        /* Khu vực hiển thị gợi ý */
+        .output {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        #suggestion {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 20px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* Khu vực thẻ gợi ý */
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .card {
+            width: 200px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            padding: 15px;
+            transform: scale(0.95);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .card:hover {
+            transform: scale(1);
+        }
+
+        .card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .card h4 {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+
+        .card p {
+            font-size: 14px;
+            color: #555;
+        }
+
+        /* Nút làm mới */
+        .reset-btn {
+            margin-top: 30px;
+            padding: 10px 20px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .reset-btn:hover {
+            background: #b02a37;
+        }
+
         /* Hiệu ứng fadeIn */
         @keyframes fadeIn {
             from {
@@ -71,6 +142,7 @@
 </head>
 <body>
     <h1>Chương trình Gợi Ý Đồ Uống</h1>
+
     <!-- Tiêu chí -->
     <div class="menu">
         <h3>1. Chọn Giá Đồ Uống:</h3>
@@ -102,11 +174,12 @@
 
     <!-- Nút làm mới -->
     <button class="reset-btn" onclick="resetAll()">Làm mới lựa chọn</button>
+
     <script>
         // Tiêu chí người dùng chọn
         const criteria = { price: null, health: null, purpose: null };
 
-        // Danh sách 20 luật gợi ý
+        // Danh sách luật gợi ý
         const rules = [
             { rule: "cheap AND veryHealthy AND refresh", name: "Nước ép cam", img: "https://via.placeholder.com/200x150?text=Orange+Juice", price: "10k" },
             { rule: "cheap AND healthy AND nutrition", name: "Nước lọc tinh khiết", img: "https://via.placeholder.com/200x150?text=Pure+Water", price: "5k" },
@@ -117,18 +190,8 @@
             { rule: "expensive AND veryHealthy AND refresh", name: "Nước detox cao cấp", img: "https://via.placeholder.com/200x150?text=Detox+Water", price: "120k" },
             { rule: "expensive AND healthy AND both", name: "Nước ép nhập khẩu", img: "https://via.placeholder.com/200x150?text=Imported+Juice", price: "150k" },
             { rule: "expensive AND unhealthy AND refresh", name: "Cocktail", img: "https://via.placeholder.com/200x150?text=Cocktail", price: "200k" },
-            { rule: "cheap AND veryHealthy AND nutrition", name: "Trà xanh", img: "https://via.placeholder.com/200x150?text=Green+Tea", price: "15k" },
-            { rule: "medium AND healthy AND nutrition", name: "Sữa hạt", img: "https://via.placeholder.com/200x150?text=Nut+Milk", price: "35k" },
-            { rule: "expensive AND veryHealthy AND nutrition", name: "Smoothie cao cấp", img: "https://via.placeholder.com/200x150?text=Premium+Smoothie", price: "200k" },
-            { rule: "cheap AND unhealthy AND nutrition", name: "Nước ngọt tăng lực", img: "https://via.placeholder.com/200x150?text=Energy+Drink", price: "15k" },
-            { rule: "medium AND veryHealthy AND both", name: "Trà trái cây", img: "https://via.placeholder.com/200x150?text=Fruit+Tea", price: "45k" },
-            { rule: "expensive AND notTooHarmful AND refresh", name: "Nước khoáng nhập khẩu", img: "https://via.placeholder.com/200x150?text=Imported+Water", price: "100k" },
-            { rule: "medium AND notTooHarmful AND refresh", name: "Trà hoa cúc", img: "https://via.placeholder.com/200x150?text=Chamomile+Tea", price: "30k" },
-            { rule: "expensive AND unhealthy AND nutrition", name: "Cocktail sữa", img: "https://via.placeholder.com/200x150?text=Milk+Cocktail", price: "250k" },
-            { rule: "cheap AND notTooHarmful AND refresh", name: "Trà chanh", img: "https://via.placeholder.com/200x150?text=Lemon+Tea", price: "10k" },
-            { rule: "medium AND notTooHarmful AND nutrition", name: "Nước ép cần tây", img: "https://via.placeholder.com/200x150?text=Celery+Juice", price: "40k" },
-            { rule: "expensive AND healthy AND nutrition", name: "Nước ép hữu cơ", img: "https://via.placeholder.com/200x150?text=Organic+Juice", price: "180k" }
         ];
+
         // Hàm chọn tiêu chí
         function toggleCriteria(type, value) {
             criteria[type] = value;
@@ -140,20 +203,18 @@
             updateSuggestion();
         }
 
-        // Hàm hiển thị gợi ý
+        // Hiển thị gợi ý
         function updateSuggestion() {
             const { price, health, purpose } = criteria;
             const results = document.getElementById("results");
             const suggestion = document.getElementById("suggestion");
-            results.innerHTML = ""; // Xóa gợi ý trước đó
+            results.innerHTML = "";
 
-            // Kiểm tra nếu thiếu tiêu chí
             if (!price || !health || !purpose) {
                 suggestion.textContent = "Hãy chọn đủ các tiêu chí để nhận gợi ý!";
                 return;
             }
 
-            // Lọc gợi ý phù hợp
             const matched = rules.filter(rule => rule.rule === `${price} AND ${health} AND ${purpose}`);
             if (matched.length) {
                 suggestion.textContent = "Gợi ý của bạn:";
@@ -169,6 +230,14 @@
             } else {
                 suggestion.textContent = "Không có gợi ý phù hợp!";
             }
+        }
+
+        // Làm mới
+        function resetAll() {
+            Object.keys(criteria).forEach(key => criteria[key] = null);
+            document.querySelectorAll(".menu button").forEach(btn => btn.classList.remove("selected"));
+            document.getElementById("suggestion").textContent = "Chọn đủ tiêu chí để nhận gợi ý...";
+            document.getElementById("results").innerHTML = "";
         }
     </script>
 </body>
