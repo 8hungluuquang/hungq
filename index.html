@@ -9,17 +9,20 @@
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background: #f5f8ff;
             margin: 0;
             padding: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
             color: #2c3e50;
+            background-image: url('https://cdn.midjourney.com/46716833-a92d-4fb9-950d-baf4561ecf5d/grid_0.png');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
         }
 
         header {
-            background: #ffffff;
+            background: rgba(255, 255, 255, 0.8);
             width: 100%;
             padding: 15px 50px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -49,6 +52,10 @@
         .hero {
             text-align: center;
             margin: 30px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
         }
 
         .hero h1 {
@@ -62,16 +69,8 @@
             margin-bottom: 20px;
         }
 
-        .hero img {
-            width: 100%;
-            max-width: 800px;
-            border-radius: 15px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-            animation: fadeIn 1.5s ease-in-out;
-        }
-
         .section {
-            background: #ffffff;
+            background: rgba(255, 255, 255, 0.9);
             border-radius: 15px;
             margin: 20px;
             padding: 20px;
@@ -147,16 +146,6 @@
         .reset-btn:hover {
             background: linear-gradient(to right, #d32f2f, #e74c3c);
         }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
     </style>
 </head>
 
@@ -175,7 +164,6 @@
     <div class="hero">
         <h1>🍹 Chọn Nước Uống Phù Hợp!</h1>
         <p>Hãy chọn các tiêu chí để nhận gợi ý đồ uống phù hợp với bạn.</p>
-        <img src="https://photo.znews.vn/w960/Uploaded/mdf_eioxrd/2021_07_06/2.jpg" alt="Hero Drink Image">
     </div>
 
     <div class="section">
