@@ -3,38 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gợi Ý Đồ Uống</title>
+    <title>Trang Gợi Ý Đồ Uống</title>
     <style>
         body {
             font-family: 'Poppins', sans-serif;
+            background-color: #f9f9f9;
             margin: 0;
             padding: 20px;
-            background: #f9f9f9;
-            color: #333;
         }
         h1 {
             text-align: center;
             color: #dd183b;
+            font-size: 2.5rem;
             margin-bottom: 30px;
         }
         .menu {
             margin-bottom: 20px;
         }
         .menu h3 {
-            color: #444;
+            color: #333;
             margin-bottom: 10px;
         }
         .menu button {
             margin-right: 10px;
-            padding: 10px 15px;
-            background: #007BFF;
+            padding: 10px 20px;
+            font-size: 14px;
             color: #fff;
+            background-color: #007bff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            transition: background-color 0.3s;
         }
         .menu button.selected {
-            background: #0056b3;
+            background-color: #0056b3;
         }
         .output {
             margin-top: 20px;
@@ -43,68 +45,75 @@
         #suggestion {
             font-size: 18px;
             font-weight: bold;
-            color: #007BFF;
-            margin: 15px 0;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
         }
         .card {
-            display: inline-block;
-            background: #fff;
+            width: 200px;
+            background-color: #fff;
             border-radius: 8px;
-            padding: 15px;
-            margin: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
             text-align: center;
-            width: 180px;
+            padding: 15px;
         }
         .card img {
             width: 100%;
-            height: auto;
-            border-radius: 5px;
+            height: 150px;
+            object-fit: cover;
         }
         .card h4 {
             margin: 10px 0 5px;
             font-size: 16px;
-            color: #555;
+            color: #333;
         }
         .card p {
-            margin: 5px 0;
             font-size: 14px;
-            color: #888;
+            color: #666;
         }
         #rating-container {
             margin-top: 20px;
             text-align: center;
         }
         #stars button {
-            font-size: 20px;
+            font-size: 25px;
             color: gray;
             cursor: pointer;
             background: none;
             border: none;
+            transition: color 0.2s;
         }
         #stars button.selected {
             color: gold;
         }
         textarea {
             width: 100%;
-            margin-top: 10px;
             padding: 10px;
+            margin-top: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
         }
         .reset-btn {
             margin-top: 20px;
             padding: 10px 20px;
-            background: red;
-            color: white;
+            background-color: red;
+            color: #fff;
             border: none;
-            cursor: pointer;
             border-radius: 5px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
     <h1>Chương trình Gợi Ý Đồ Uống</h1>
+
+    <!-- Tiêu chí lựa chọn -->
     <div class="menu">
         <h3>1. Chọn Giá Đồ Uống:</h3>
         <button onclick="setCriteria('price', 'cheap')">Rẻ (5k-15k)</button>
@@ -124,11 +133,15 @@
         <button onclick="setCriteria('purpose', 'nutrition')">Vì chất dinh dưỡng</button>
         <button onclick="setCriteria('purpose', 'both')">Vì cả hai</button>
     </div>
+
+    <!-- Gợi ý đồ uống -->
     <div class="output">
         <h3>Gợi ý:</h3>
         <div id="suggestion">Chọn đủ tiêu chí để nhận gợi ý...</div>
-        <div id="results"></div>
+        <div class="card-container" id="results"></div>
     </div>
+
+    <!-- Đánh giá -->
     <div id="rating-container">
         <h3>Đánh giá gợi ý:</h3>
         <div id="stars">
@@ -141,10 +154,25 @@
         <textarea id="feedback" rows="4" placeholder="Hãy nhập phản hồi của bạn..."></textarea>
         <button onclick="submitFeedback()">Gửi phản hồi</button>
     </div>
+
+    <!-- Làm mới lựa chọn -->
     <button class="reset-btn" onclick="resetAll()">Làm mới lựa chọn</button>
 
     <script>
         const criteria = { price: null, health: null, purpose: null };
+
+        // Danh sách luật gợi ý
+        const rules = [
+            { rule: "cheap AND veryHealthy AND refresh", name: "Nước ép cam", img: "orange_juice.jpg", price: "10k" },
+            { rule: "cheap AND healthy AND both", name: "Trà thảo mộc", img: "herbal_tea.jpg", price: "15k" },
+            { rule: "medium AND veryHealthy AND nutrition", name: "Sữa hạt", img: "nut_milk.jpg", price: "25k" },
+            { rule: "medium AND unhealthy AND refresh", name: "Soda", img: "soda.jpg", price: "30k" },
+            { rule: "expensive AND veryHealthy AND both", name: "Nước ép detox", img: "detox_juice.jpg", price: "150k" },
+            { rule: "cheap AND unhealthy AND refresh", name: "Nước ngọt", img: "soft_drink.jpg", price: "12k" },
+            { rule: "medium AND healthy AND both", name: "Trà trái cây", img: "fruit_tea.jpg", price: "40k" },
+            { rule: "expensive AND notTooHarmful AND nutrition", name: "Sữa chua uống", img: "yogurt_drink.jpg", price: "120k" },
+            // ... (Thêm các luật khác để đạt 20 luật)
+        ];
 
         function setCriteria(type, value) {
             criteria[type] = value;
@@ -164,14 +192,7 @@
                 return;
             }
 
-            const rules = [
-                { rule: "cheap AND veryHealthy AND refresh", name: "Nước ép cam", img: "orange_juice.jpg", price: "10k" },
-                { rule: "medium AND veryHealthy AND both", name: "Trà detox", img: "detox_tea.jpg", price: "30k" },
-                { rule: "expensive AND unhealthy AND refresh", name: "Soda nhập khẩu", img: "soda.jpg", price: "120k" }
-            ];
-
             const matchedRules = rules.filter(rule => rule.rule === `${price} AND ${health} AND ${purpose}`);
-
             if (matchedRules.length) {
                 suggestion.textContent = "Gợi ý của bạn:";
                 matchedRules.forEach(drink => {
