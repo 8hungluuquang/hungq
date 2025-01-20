@@ -357,18 +357,25 @@
             document.querySelectorAll('button').forEach(btn => btn.classList.remove('selected'));
             document.getElementById('suggestion').textContent = "Hãy chọn đủ tiêu chí để nhận gợi ý!";
             document.getElementById('rating-container').style.display = 'none'; // Ẩn phần đánh giá khi làm mới
+            hasRated = false; // Đặt lại trạng thái cho phép đánh giá
         }
 
         let hasRated = false;
 
         function rateSuggestion(stars) {
+            // Kiểm tra nếu đã đánh giá rồi, không cho đánh giá lại
+            if (hasRated) {
+                alert("Bạn đã đánh giá rồi! Cảm ơn bạn.");
+                return;
+            }
+
             const starButtons = document.querySelectorAll('#stars button');
             starButtons.forEach((btn, index) => {
                 btn.textContent = index < stars ? '⭐' : '☆';
                 btn.classList.toggle('selected', index < stars);
             });
 
-            hasRated = true;
+            hasRated = true; // Đánh dấu đã đánh giá
 
             const feedbackContainer = document.getElementById('feedback-container');
             const thankYouMessage = document.getElementById('thank-you');
