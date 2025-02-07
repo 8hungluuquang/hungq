@@ -236,7 +236,7 @@
     <div class="section">
         <h3> Chọn Giá Đồ Uống:</h3>
         <div class="buttons">
-            <button onclick="setCriteria('price', 'cheap')">Rẻ (5k-15k)</button>
+            <button onclick="setCriteria('price', 'cheap')">Rẻ (5k trở lên)</button>
             <button onclick="setCriteria('price', 'medium')">Trung bình (20k trở lên)</button>
             <button onclick="setCriteria('price', 'expensive')">Đắt (100k trở lên)</button>
         </div>
@@ -288,42 +288,42 @@
         const criteria = { price: null, health: null, purpose: null };
 
          const rules = [
-                { rule: "cheap AND veryHealthy AND refresh", output: "Nước ngọt không có ga: Nước ép cam, Nước ép dứa, Trà xanh." },
-                { rule: "cheap AND veryHealthy AND nutrition", output: "Nước ép trái cây giá rẻ: Nước ép táo, Nước ép lựu." },
-                { rule: "cheap AND veryHealthy AND both", output: "Trà thảo mộc: Trà gừng, Trà hoa cúc." },
-                { rule: "cheap AND notTooHarmful AND refresh", output: "Nước ngọt có ga: Coca-Cola, Pepsi, Sprite." },
+                { rule: "cheap AND veryHealthy AND refresh", output: "Nước ngọt không có ga: Nước ép cam, Nước ép dứa, Trà xanh, ..." },
+                { rule: "cheap AND veryHealthy AND nutrition", output: "Nước ép trái cây giá rẻ: Nước ép táo, Nước ép lựu, ..." },
+                { rule: "cheap AND veryHealthy AND both", output: "Trà thảo mộc: Trà gừng, Trà hoa cúc, ..." },
+                { rule: "cheap AND notTooHarmful AND refresh", output: "Nước ngọt có ga: Coca-Cola, Pepsi, Sprite, ..." },
                 { rule: "cheap AND notTooHarmful AND nutrition", output: "Loại nước chưa tồn tại!" },
                 { rule: "cheap AND notTooHarmful AND both", output: "Loại nước chưa tồn tại!" },
-                { rule: "cheap AND healthy AND refresh", output: "Nước lọc giá rẻ: Nước tinh khiết, Nước khoáng đóng chai." },
+                { rule: "cheap AND healthy AND refresh", output: "Nước lọc giá rẻ: Nước tinh khiết, Nước khoáng đóng chai, ..." },
                 { rule: "cheap AND healthy AND nutrition", output: "Loại nước chưa tồn tại!" },
                 { rule: "cheap AND healthy AND both", output: "Loại nước chưa tồn tại!" },
-                { rule: "cheap AND unhealthy AND refresh", output: "Nước ngọt giá rẻ: Soda vị đặc biệt, Nước ngọt đóng chai." },
+                { rule: "cheap AND unhealthy AND refresh", output: "Nước ngọt giá rẻ: Soda vị đặc biệt, Nước ngọt đóng chai, ..." },
                 { rule: "cheap AND unhealthy AND nutrition", output: "Loại nước chưa tồn tại!" },
                 { rule: "cheap AND unhealthy AND both", output: "Loại nước chưa tồn tại!" },
-                { rule: "medium AND veryHealthy AND refresh", output: "Nước dừa tươi, Nước ép cà rốt." },
-                { rule: "medium AND veryHealthy AND nutrition", output: "Nước ép rau củ: Nước ép củ cải đỏ, Nước ép dưa leo." },
-                { rule: "medium AND veryHealthy AND both", output: "Nước tốt cho sức khỏe: Trà hoa cúc, Kombucha." },
-                { rule: "medium AND notTooHarmful AND refresh", output: "Trà sữa ít đường: Trà sữa matcha, Trà sữa trân châu ít ngọt." },
-                { rule: "medium AND notTooHarmful AND nutrition", output: "Nước tăng lực ít đường: Red Bull không đường, Monster Ultra." },
+                { rule: "medium AND veryHealthy AND refresh", output: "Nước dừa tươi, Nước ép cà rốt, ..." },
+                { rule: "medium AND veryHealthy AND nutrition", output: "Nước ép rau củ: Nước ép củ cải đỏ, Nước ép dưa leo, ..." },
+                { rule: "medium AND veryHealthy AND both", output: "Nước tốt cho sức khỏe: Trà hoa cúc, Kombucha, ..." },
+                { rule: "medium AND notTooHarmful AND refresh", output: "Trà sữa ít đường: Trà sữa matcha, Trà sữa trân châu ít ngọt, ..." },
+                { rule: "medium AND notTooHarmful AND nutrition", output: "Nước tăng lực ít đường: Red Bull không đường, Monster Ultra, ..." },
                 { rule: "medium AND notTooHarmful AND both", output: "Loại nước chưa tồn tại!" },
-                { rule: "medium AND healthy AND refresh", output: "Kombucha: Kombucha gừng, Kombucha dứa." },
-                { rule: "medium AND healthy AND nutrition", output: "Sữa hạt: Sữa óc chó, Sữa hạnh nhân." },
-                { rule: "medium AND healthy AND both", output: "Sữa chua uống: Sữa chua uống vị dâu, Sữa chua uống vị việt quất." },
+                { rule: "medium AND healthy AND refresh", output: "Kombucha: Kombucha gừng, Kombucha dứa, ..." },
+                { rule: "medium AND healthy AND nutrition", output: "Sữa hạt: Sữa óc chó, Sữa hạnh nhân, ..." },
+                { rule: "medium AND healthy AND both", output: "Sữa chua uống: Sữa chua uống vị dâu, Sữa chua uống vị việt quất, ..." },
                 { rule: "medium AND unhealthy AND refresh", output: "Loại nước chưa tồn tại!" },
                 { rule: "medium AND unhealthy AND nutrition", output: "Loại nước chưa tồn tại!" },
                 { rule: "medium AND unhealthy AND both", output: "Loại nước chưa tồn tại!" },
-                { rule: "expensive AND veryHealthy AND refresh", output: "Nước khoáng cao cấp: Evian, Perrier." },
-                { rule: "expensive AND veryHealthy AND nutrition", output: "Nước ép rau củ cao cấp: Nước ép cần tây, Nước ép cà rốt." },
-                { rule: "expensive AND veryHealthy AND both", output: "Nước detox: Detox chanh, Detox bạc hà." },
-                { rule: "expensive AND notTooHarmful AND refresh", output: "Nước ngọt cao cấp: Soda vị cherry, Soda vanilla." },
+                { rule: "expensive AND veryHealthy AND refresh", output: "Nước khoáng cao cấp: Evian, Perrier, ..." },
+                { rule: "expensive AND veryHealthy AND nutrition", output: "Nước ép rau củ cao cấp: Nước ép cần tây, Nước ép cà rốt, ..." },
+                { rule: "expensive AND veryHealthy AND both", output: "Nước detox: Detox chanh, Detox bạc hà, ..." },
+                { rule: "expensive AND notTooHarmful AND refresh", output: "Nước ngọt cao cấp: Soda vị cherry, Soda vanilla, ..." },
                 { rule: "expensive AND notTooHarmful AND nutrition", output: "Loại nước chưa tồn tại!" },
                 { rule: "expensive AND notTooHarmful AND both", output: "Loại nước chưa tồn tại!" },
-                { rule: "expensive AND healthy AND refresh", output: "Nước khoáng nhập khẩu: San Pellegrino, Perrier." },
+                { rule: "expensive AND healthy AND refresh", output: "Nước khoáng nhập khẩu: San Pellegrino, Perrier, ..." },
                 { rule: "expensive AND healthy AND nutrition", output: "Loại nước chưa tồn tại!" },
                 { rule: "expensive AND healthy AND both", output: "Loại nước chưa tồn tại!" },
                 { rule: "expensive AND unhealthy AND refresh", output: "Loại nước chưa tồn tại!" },
                 { rule: "expensive AND unhealthy AND nutrition", output: "Loại nước chưa tồn tại!" },
-                { rule: "expensive AND unhealthy AND both", output: "Rượu vang: Rượu vang đỏ, Rượu vang trắng." },
+                { rule: "expensive AND unhealthy AND both", output: "Rượu vang: Rượu vang đỏ, Rượu vang trắng, ..." },
             ];
 
         function resetSelection(button) {
